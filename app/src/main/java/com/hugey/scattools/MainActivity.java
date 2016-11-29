@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements Button.OnClickListener {
 
-    private Button mBtnGo;
+    private Button mBtnDie;
     private Button mBtnPlay;
     private Button mBtnReset;
     private TextView mTvTimer;
@@ -21,8 +21,8 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
     private int mDieProgress = 0;
     private int mDieInterval = 80;
     private int mTimerProgress = 0;
-    private int mTimerInterval = 1000;
-    private int mTimer = 150;
+    private int mSecondInterval = 1000;
+    private int mTimerDuration = 150;
     private int mCurrentLetter;
     private boolean mIsPlaying;
 
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
                 if (mLetters.length == mCurrentLetter) {
                     mCurrentLetter = 0;
                 }
-                mBtnGo.setText(getRandom(mLetters));
+                mBtnDie.setText(getRandom(mLetters));
             } else {
                 mDieProgress = 0;
             }
@@ -49,19 +49,22 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
     Runnable mTimerRunnable = new Runnable() {
         @Override
         public void run() {
-            mTimerProgress += mTimerInterval;
+            mTimerProgress += mSecondInterval;
 
             int duration = mTimerProgress / 1000;
-            int time = mTimer - duration;
-            if (time == 0) {
+            int time = mTimerDuration - duration;
 
-            }
             String minutes = Integer.toString(time / 60);
             String seconds = Integer.toString(time % 60);
+            if (time % 60 < 10) {
+                seconds = "0" + seconds;
+            }
             String displayTime = minutes + ":" + seconds;
             mTvTimer.setText(displayTime);
 
-            mTimerHandler.postDelayed(mTimerRunnable, mTimerInterval);
+            if (time > 0) {
+                mTimerHandler.postDelayed(mTimerRunnable, mSecondInterval);
+            }
         }
     };
 
@@ -70,13 +73,13 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mBtnGo = (Button) findViewById(R.id.btn_go);
+        mBtnDie = (Button) findViewById(R.id.btn_go);
         mBtnPlay = (Button) findViewById(R.id.btn_play);
         mBtnReset = (Button) findViewById(R.id.btn_reset);
         mTvTimer = (TextView) findViewById(R.id.tv_timer);
 
         mBtnPlay.setOnClickListener(this);
-        mBtnGo.setOnClickListener(this);
+        mBtnDie.setOnClickListener(this);
         mBtnReset.setOnClickListener(this);
 
 
@@ -88,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
     @Override
     protected void onResume() {
         super.onResume();
-        mBtnGo.setText(getRandom(mLetters));
+        mBtnDie.setText(getRandom(mLetters));
     }
 
     @Override
@@ -97,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
             mDieHandler.postDelayed(mDieRunnable, mDieInterval);
         } else if (view.getId() == R.id.btn_play) {
             if (!mIsPlaying) {
-                mTimerHandler.postDelayed(mTimerRunnable, mTimerInterval);
+                mTimerHandler.postDelayed(mTimerRunnable, mSecondInterval);
                 mBtnPlay.setText("Pause");
             } else {
                 mTimerHandler.removeCallbacks(mTimerRunnable);
