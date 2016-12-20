@@ -1,0 +1,913 @@
+{
+   "categories":
+    [
+     {
+     "id" : 1,
+     "category" : "A boy’s name"
+     },
+     {
+     "id" : 2,
+     "category" : "A river"
+     },
+     {
+     "id" : 3,
+     "category" : "An animal"
+     },
+     {
+     "id" : 4,
+     "category" : "Things that are cold"
+     },
+     {
+     "id" : 5,
+     "category" : "Insects"
+     },
+     {
+     "id" : 6,
+     "category" : "TV Shows"
+     },
+     {
+     "id" : 7,
+     "category" : "Things that grow"
+     },
+     {
+     "id" : 8,
+     "category" : "Fruits"
+     },
+     {
+     "id" : 9,
+     "category" : "Things that are black"
+     },
+     {
+     "id" : 10,
+     "category" : "School subjects"
+     },
+     {
+     "id" : 11,
+     "category" : "Movie titles"
+     },
+     {
+     "id" : 12,
+     "category" : "Musical Instruments"
+     },
+     {
+     "id" : 13,
+     "category" : "Authors"
+     },
+     {
+     "id" : 14,
+     "category" : "Bodies of water"
+     },
+     {
+     "id" : 15,
+     "category" : "A bird"
+     },
+     {
+     "id" : 16,
+     "category" : "Countries"
+     },
+     {
+     "id" : 17,
+     "category" : "Cartoon characters"
+     },
+     {
+     "id" : 18,
+     "category" : "Holidays"
+     },
+     {
+     "id" : 19,
+     "category" : "Things that are square"
+     },
+     {
+     "id" : 20,
+     "category" : "In the NWT (Northwest Territories, Canada)"
+     },
+     {
+     "id" : 21,
+     "category" : "Clothing"
+     },
+     {
+     "id" : 22,
+     "category" : "A relative"
+     },
+     {
+     "id" : 23,
+     "category" : "Games"
+     },
+     {
+     "id" : 24,
+     "category" : "Sports Stars"
+     },
+     {
+     "id" : 25,
+     "category" : "School supplies"
+     },
+     {
+     "id" : 26,
+     "category" : "Things that are hot"
+     },
+     {
+     "id" : 27,
+     "category" : "Heroes"
+     },
+     {
+     "id" : 28,
+     "category" : "A girl’s name"
+     },
+     {
+     "id" : 29,
+     "category" : "Fears"
+     },
+     {
+     "id" : 30,
+     "category" : "TV Stars"
+     },
+     {
+     "id" : 31,
+     "category" : "Colors"
+     },
+     {
+     "id" : 32,
+     "category" : "A fish"
+     },
+     {
+     "id" : 33,
+     "category" : "Fruits"
+     },
+     {
+     "id" : 34,
+     "category" : "Provinces or States"
+     },
+     {
+     "id" : 35,
+     "category" : "Sports equipment"
+     },
+     {
+     "id" : 36,
+     "category" : "Tools"
+     },
+     {
+     "id" : 37,
+     "category" : "Breakfast foods"
+     },
+     {
+     "id" : 38,
+     "category" : "Gifts"
+     },
+     {
+     "id" : 39,
+     "category" : "Flowers"
+     },
+     {
+     "id" : 40,
+     "category" : "Ice cream flavors"
+     },
+     {
+     "id" : 41,
+     "category" : "A drink"
+     },
+     {
+     "id" : 42,
+     "category" : "Toys"
+     },
+     {
+     "id" : 43,
+     "category" : "Cities"
+     },
+     {
+     "id" : 44,
+     "category" : "Things in the kitchen"
+     },
+     {
+     "id" : 45,
+     "category" : "Ocean things"
+     },
+     {
+     "id" : 46,
+     "category" : "Nicknames"
+     },
+     {
+     "id" : 47,
+     "category" : "Hobbies"
+     },
+     {
+     "id" : 48,
+     "category" : "Parts of the body"
+     },
+     {
+     "id" : 49,
+     "category" : "Sandwiches"
+     },
+     {
+     "id" : 50,
+     "category" : "Items in a catalog"
+     },
+     {
+     "id" : 51,
+     "category" : "World leaders \/ Politicians"
+     },
+     {
+     "id" : 52,
+     "category" : "School subjects"
+     },
+     {
+     "id" : 53,
+     "category" : "Excuses for being late"
+     },
+     {
+     "id" : 54,
+     "category" : "Things that jump\/bounce"
+     },
+     {
+     "id" : 55,
+     "category" : "Television stars"
+     },
+     {
+     "id" : 56,
+     "category" : "Things in a park"
+     },
+     {
+     "id" : 57,
+     "category" : "Foriegn cities"
+     },
+     {
+     "id" : 58,
+     "category" : "Stones\/Gems"
+     },
+     {
+     "id" : 59,
+     "category" : "Musical instruments"
+     },
+     {
+     "id" : 60,
+     "category" : "Nicknames"
+     },
+     {
+     "id" : 61,
+     "category" : "Things in the sky"
+     },
+     {
+     "id" : 62,
+     "category" : "Pizza toppings"
+     },
+     {
+     "id" : 63,
+     "category" : "Colleges\/Universities"
+     },
+     {
+     "id" : 64,
+     "category" : "Fish"
+     },
+     {
+     "id" : 65,
+     "category" : "Countries"
+     },
+     {
+     "id" : 66,
+     "category" : "Things that have spots"
+     },
+     {
+     "id" : 67,
+     "category" : "Historical Figures"
+     },
+     {
+     "id" : 68,
+     "category" : "Something you’re afraid of"
+     },
+     {
+     "id" : 69,
+     "category" : "Terms of endearment"
+     },
+     {
+     "id" : 70,
+     "category" : "Items in this room"
+     },
+     {
+     "id" : 71,
+     "category" : "Drugs that are abused"
+     },
+     {
+     "id" : 72,
+     "category" : "Fictional characters"
+     },
+     {
+     "id" : 73,
+     "category" : "Menu items"
+     },
+     {
+     "id" : 74,
+     "category" : "Magazines"
+     },
+     {
+     "id" : 75,
+     "category" : "Capitals"
+     },
+     {
+     "id" : 76,
+     "category" : "Kinds of candy"
+     },
+     {
+     "id" : 77,
+     "category" : "Items you save up to buy"
+     },
+     {
+     "id" : 78,
+     "category" : "Footware"
+     },
+     {
+     "id" : 79,
+     "category" : "Something you keep hidden"
+     },
+     {
+     "id" : 80,
+     "category" : "Items in a suitcase"
+     },
+     {
+     "id" : 81,
+     "category" : "Things with tails"
+     },
+     {
+     "id" : 82,
+     "category" : "Sports equiptment"
+     },
+     {
+     "id" : 83,
+     "category" : "Crimes"
+     },
+     {
+     "id" : 84,
+     "category" : "Things that are sticky"
+     },
+     {
+     "id" : 85,
+     "category" : "Awards\/ceremonies"
+     },
+     {
+     "id" : 86,
+     "category" : "Cars"
+     },
+     {
+     "id" : 87,
+     "category" : "Spices\/Herbs"
+     },
+     {
+     "id" : 88,
+     "category" : "Bad habits"
+     },
+     {
+     "id" : 89,
+     "category" : "Cosmetics\/Toiletries"
+     },
+     {
+     "id" : 90,
+     "category" : "Celebrities"
+     },
+     {
+     "id" : 91,
+     "category" : "Cooking utensils"
+     },
+     {
+     "id" : 92,
+     "category" : "Reptiles\/Amphibians"
+     },
+     {
+     "id" : 93,
+     "category" : "Parks"
+     },
+     {
+     "id" : 94,
+     "category" : "Leisure activities"
+     },
+     {
+     "id" : 95,
+     "category" : "Things you’re allergic to"
+     },
+     {
+     "id" : 96,
+     "category" : "Restaurants"
+     },
+     {
+     "id" : 97,
+     "category" : "Notorious people"
+     },
+     {
+     "id" : 98,
+     "category" : "Fruits"
+     },
+     {
+     "id" : 99,
+     "category" : "Things in a medicine cabinet"
+     },
+     {
+     "id" : 100,
+     "category" : "Toys"
+     },
+     {
+     "id" : 101,
+     "category" : "Household chores"
+     },
+     {
+     "id" : 102,
+     "category" : "Bodies of water"
+     },
+     {
+     "id" : 103,
+     "category" : "Authors"
+     },
+     {
+     "id" : 104,
+     "category" : "Halloween costumes"
+     },
+     {
+     "id" : 105,
+     "category" : "Weapons"
+     },
+     {
+     "id" : 106,
+     "category" : "Things that are round"
+     },
+     {
+     "id" : 107,
+     "category" : "Words associated with exercise"
+     },
+     {
+     "id" : 108,
+     "category" : "Sports"
+     },
+     {
+     "id" : 109,
+     "category" : "Song titles"
+     },
+     {
+     "id" : 110,
+     "category" : "Parts of the body"
+     },
+     {
+     "id" : 111,
+     "category" : "Ethnic foods"
+     },
+     {
+     "id" : 112,
+     "category" : "Things you shout"
+     },
+     {
+     "id" : 113,
+     "category" : "Birds"
+     },
+     {
+     "id" : 114,
+     "category" : "A girl’s name"
+     },
+     {
+     "id" : 115,
+     "category" : "Ways to get from here to there"
+     },
+     {
+     "id" : 116,
+     "category" : "Items in a kitchen"
+     },
+     {
+     "id" : 117,
+     "category" : "Villains"
+     },
+     {
+     "id" : 118,
+     "category" : "Flowers"
+     },
+     {
+     "id" : 119,
+     "category" : "Things you replace"
+     },
+     {
+     "id" : 120,
+     "category" : "Baby foods"
+     },
+     {
+     "id" : 121,
+     "category" : "Famous duos and trios"
+     },
+     {
+     "id" : 122,
+     "category" : "Things found in a desk"
+     },
+     {
+     "id" : 123,
+     "category" : "Vacation spots"
+     },
+     {
+     "id" : 124,
+     "category" : "Diseases"
+     },
+     {
+     "id" : 125,
+     "category" : "Words associated with money"
+     },
+     {
+     "id" : 126,
+     "category" : "Items in a vending machine"
+     },
+     {
+     "id" : 127,
+     "category" : "Movie Titles"
+     },
+     {
+     "id" : 128,
+     "category" : "Games"
+     },
+     {
+     "id" : 129,
+     "category" : "Things you wear"
+     },
+     {
+     "id" : 130,
+     "category" : "Beers"
+     },
+     {
+     "id" : 131,
+     "category" : "Things at a circus"
+     },
+     {
+     "id" : 132,
+     "category" : "Vegetables"
+     },
+     {
+     "id" : 133,
+     "category" : "States"
+     },
+     {
+     "id" : 134,
+     "category" : "Things you throw away"
+     },
+     {
+     "id" : 135,
+     "category" : "Occupations"
+     },
+     {
+     "id" : 136,
+     "category" : "Appliances"
+     },
+     {
+     "id" : 137,
+     "category" : "Cartoon characters"
+     },
+     {
+     "id" : 138,
+     "category" : "Types of drinks"
+     },
+     {
+     "id" : 139,
+     "category" : "Musical groups"
+     },
+     {
+     "id" : 140,
+     "category" : "Store names"
+     },
+     {
+     "id" : 141,
+     "category" : "Things at a football game"
+     },
+     {
+     "id" : 142,
+     "category" : "Trees"
+     },
+     {
+     "id" : 143,
+     "category" : "Personality traits"
+     },
+     {
+     "id" : 144,
+     "category" : "Video games"
+     },
+     {
+     "id" : 145,
+     "category" : "Electronic gadgets"
+     },
+     {
+     "id" : 146,
+     "category" : "Board games"
+     },
+     {
+     "id" : 147,
+     "category" : "Things that use a remote"
+     },
+     {
+     "id" : 148,
+     "category" : "Card games"
+     },
+     {
+     "id" : 149,
+     "category" : "Internet lingo"
+     },
+     {
+     "id" : 150,
+     "category" : "Offensive words"
+     },
+     {
+     "id" : 151,
+     "category" : "Wireless things"
+     },
+     {
+     "id" : 152,
+     "category" : "Computer parts"
+     },
+     {
+     "id" : 153,
+     "category" : "Software"
+     },
+     {
+     "id" : 154,
+     "category" : "Websites"
+     },
+     {
+     "id" : 155,
+     "category" : "Game terms"
+     },
+     {
+     "id" : 156,
+     "category" : "Things in a grocery store"
+     },
+     {
+     "id" : 157,
+     "category" : "Reasons to quit your job"
+     },
+     {
+     "id" : 158,
+     "category" : "Things that have stripes"
+     },
+     {
+     "id" : 159,
+     "category" : "Tourist attractions"
+     },
+     {
+     "id" : 160,
+     "category" : "Diet foods"
+     },
+     {
+     "id" : 161,
+     "category" : "Things found in a hospital"
+     },
+     {
+     "id" : 162,
+     "category" : "Food\/Drink that is green"
+     },
+     {
+     "id" : 163,
+     "category" : "Weekend Activities"
+     },
+     {
+     "id" : 164,
+     "category" : "Acronyms"
+     },
+     {
+     "id" : 165,
+     "category" : "Seafood"
+     },
+     {
+     "id" : 166,
+     "category" : "Christmas songs"
+     },
+     {
+     "id" : 167,
+     "category" : "Words ending in “-n”"
+     },
+     {
+     "id" : 168,
+     "category" : "Words with double letters"
+     },
+     {
+     "id" : 169,
+     "category" : "Children’s books"
+     },
+     {
+     "id" : 170,
+     "category" : "Things found at a bar"
+     },
+     {
+     "id" : 171,
+     "category" : "Sports played outdoors"
+     },
+     {
+     "id" : 172,
+     "category" : "Names used in songs"
+     },
+     {
+     "id" : 173,
+     "category" : "Foods you eat raw"
+     },
+     {
+     "id" : 174,
+     "category" : "Places in Europe"
+     },
+     {
+     "id" : 175,
+     "category" : "Olympic events"
+     },
+     {
+     "id" : 176,
+     "category" : "Things you see at the zoo"
+     },
+     {
+     "id" : 177,
+     "category" : "Math terms"
+     },
+     {
+     "id" : 178,
+     "category" : "Animals in books or movies"
+     },
+     {
+     "id" : 179,
+     "category" : "Things to do at a party"
+     },
+     {
+     "id" : 180,
+     "category" : "Kinds of soup"
+     },
+     {
+     "id" : 181,
+     "category" : "Things found in New York"
+     },
+     {
+     "id" : 182,
+     "category" : "Things you get tickets for"
+     },
+     {
+     "id" : 183,
+     "category" : "Things you do at work"
+     },
+     {
+     "id" : 184,
+     "category" : "Foreign words used in English"
+     },
+     {
+     "id" : 185,
+     "category" : "Things you shouldn’t touch"
+     },
+     {
+     "id" : 186,
+     "category" : "Spicy foods"
+     },
+     {
+     "id" : 187,
+     "category" : "Things at a carnival"
+     },
+     {
+     "id" : 188,
+     "category" : "Things you make"
+     },
+     {
+     "id" : 189,
+     "category" : "Places to hangout"
+     },
+     {
+     "id" : 190,
+     "category" : "Animal noises"
+     },
+     {
+     "id" : 191,
+     "category" : "Computer programs"
+     },
+     {
+     "id" : 192,
+     "category" : "Honeymoon spots"
+     },
+     {
+     "id" : 193,
+     "category" : "Things you buy for kids"
+     },
+     {
+     "id" : 194,
+     "category" : "Things that can kill you"
+     },
+     {
+     "id" : 195,
+     "category" : "Reasons to take out a loan"
+     },
+     {
+     "id" : 196,
+     "category" : "Words associated with winter"
+     },
+     {
+     "id" : 197,
+     "category" : "Things to do on a date"
+     },
+     {
+     "id" : 198,
+     "category" : "Historic events"
+     },
+     {
+     "id" : 199,
+     "category" : "Things you store items in"
+     },
+     {
+     "id" : 200,
+     "category" : "Things you do everyday"
+     },
+     {
+     "id" : 201,
+     "category" : "Things you get in the mail"
+     },
+     {
+     "id" : 202,
+     "category" : "Things you save up to buy"
+     },
+     {
+     "id" : 203,
+     "category" : "Things you sit\/on"
+     },
+     {
+     "id" : 204,
+     "category" : "Reasons to make a phone call"
+     },
+     {
+     "id" : 205,
+     "category" : "Types of weather"
+     },
+     {
+     "id" : 206,
+     "category" : "Titles people can have"
+     },
+     {
+     "id" : 207,
+     "category" : "Things that have buttons"
+     },
+     {
+     "id" : 208,
+     "category" : "Items you take on a road trip"
+     },
+     {
+     "id" : 209,
+     "category" : "Things that have wheels"
+     },
+     {
+     "id" : 210,
+     "category" : "Reasons to call 911"
+     },
+     {
+     "id" : 211,
+     "category" : "Things that make you smile"
+     },
+     {
+     "id" : 212,
+     "category" : "Ways to kill time"
+     },
+     {
+     "id" : 213,
+     "category" : "Things that can get you fired"
+     },
+     {
+     "id" : 214,
+     "category" : "Hobbies"
+     },
+     {
+     "id" : 215,
+     "category" : "Holiday Activities"
+     },
+     {
+     "id" : 216,
+     "category" : "Pokémon"
+     },
+     {
+     "id" : 217,
+     "category" : "Dances"
+     },
+     {
+     "id" : 218,
+     "category" : "Things you hold in your hand"
+     },
+     {
+     "id" : 219,
+     "category" : "Things that go in an envelope"
+     },
+     {
+     "id" : 220,
+     "category" : "Dinner Dishes"
+     },
+     {
+     "id" : 221,
+     "category" : "Lunch Foods"
+     },
+     {
+     "id" : 222,
+     "category" : "African Countries"
+     },
+     {
+     "id" : 223,
+     "category" : "South American Countries"
+     },
+     {
+     "id" : 224,
+     "category" : "A Disease"
+     },
+     {
+     "id" : 225,
+     "category" : "A Virus"
+     },
+     {
+     "id" : 226,
+     "category" : "Mode of Transportation"
+     },
+     {
+     "id" : 227,
+     "category" : "Common Last Names"
+     }
+     ]
+}
