@@ -64,14 +64,5 @@ public class Category implements Parcelable {
         }
     };
 
-    public class CategoryViewHolder extends RecyclerView.ViewHolder {
-        private TextView mTvNumber;
-        private TextView mTvCategory;
 
-        public CategoryViewHolder(View itemView) {
-            super(itemView);
-        }
-
-
-    }
 }

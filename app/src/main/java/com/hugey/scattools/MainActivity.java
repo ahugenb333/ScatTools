@@ -1,31 +1,33 @@
 package com.hugey.scattools;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.Random;
+//TODO Timer stuff in ScatTimer, Die stuff in ScatDie
 
-public class MainActivity extends AppCompatActivity implements Button.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, ScatTimer.TimerView {
 
+    private BottomNavigationView mBtnNav;
     private Button mBtnDie;
     private Button mBtnPlay;
     private Button mBtnReset;
+    private Button mBtnList;
     private TextView mTvTimer;
 
     private Handler mDieHandler = new Handler();
-    private Handler mTimerHandler = new Handler();
     private int mDieProgress = 0;
     private int mDieInterval = 80;
-    private int mTimerProgress = 0;
-    private int mSecondInterval = 1000;
-    private int mTimerDuration = 150;
     private int mCurrentLetter;
     private boolean mIsPlaying;
 
+    private ScatTimer mTimer;
 
     private String[] mLetters;
 
@@ -46,38 +48,23 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
         }
     };
 
-    Runnable mTimerRunnable = new Runnable() {
-        @Override
-        public void run() {
-            mTimerProgress += mSecondInterval;
 
-            int duration = mTimerProgress / 1000;
-            int time = mTimerDuration - duration;
-
-            String minutes = Integer.toString(time / 60);
-            String seconds = Integer.toString(time % 60);
-            if (time % 60 < 10) {
-                seconds = "0" + seconds;
-            }
-            String displayTime = minutes + ":" + seconds;
-            mTvTimer.setText(displayTime);
-
-            if (time > 0) {
-                mTimerHandler.postDelayed(mTimerRunnable, mSecondInterval);
-            }
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mTimer = new ScatTimer(this);
+
+        mBtnNav = (BottomNavigationView) findViewById(R.id.list_nav_view);
         mBtnDie = (Button) findViewById(R.id.btn_go);
         mBtnPlay = (Button) findViewById(R.id.btn_play);
         mBtnReset = (Button) findViewById(R.id.btn_reset);
         mTvTimer = (TextView) findViewById(R.id.tv_timer);
+        mBtnList = (Button) findViewById(R.id.activity_list_btn);
 
+        mBtnNav.setOnClickListener(this);
         mBtnPlay.setOnClickListener(this);
         mBtnDie.setOnClickListener(this);
         mBtnReset.setOnClickListener(this);
@@ -100,25 +87,33 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
             mDieHandler.postDelayed(mDieRunnable, mDieInterval);
         } else if (view.getId() == R.id.btn_play) {
             if (!mIsPlaying) {
-                mTimerHandler.postDelayed(mTimerRunnable, mSecondInterval);
+                mTimer.postTimerDelay();
                 mBtnPlay.setText("Pause");
             } else {
-                mTimerHandler.removeCallbacks(mTimerRunnable);
+                mTimer.removeTimerCallbacks();
                 mBtnPlay.setText("Play");
             }
             mIsPlaying = !mIsPlaying;
         } else if (view.getId() == R.id.btn_reset) {
-            mTimerHandler.removeCallbacks(mTimerRunnable);
+            mTimer.removeTimerCallbacks();
+            mTimer.resetTimerProgress();
             mBtnPlay.setText("Play");
             mTvTimer.setText("2:30");
-            mTimerProgress = 0;
             mIsPlaying = false;
+        } else if (view.getId() == R.id.activity_list_btn) {
+        } else if (view.getId() == R.id.list_nav_view) {
+            startActivity(new Intent(this, ListActivity.class));
         }
     }
 
     public static String getRandom(String[] array) {
         int rnd = new Random().nextInt(array.length);
         return array[rnd];
+    }
+
+    @Override
+    public void setTimerText(String text) {
+        mTvTimer.setText(text);
     }
 
 
