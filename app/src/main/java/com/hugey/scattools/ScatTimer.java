@@ -1,6 +1,8 @@
 package com.hugey.scattools;
 
 import android.os.Handler;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Created by austin on 2/13/17.
@@ -49,11 +51,27 @@ public class ScatTimer {
         mTimerHandler.postDelayed(mTimerRunnable, mSecondInterval);
     }
 
+    public void postTimerDelay(int delay) {
+        mTimerHandler.postDelayed(mTimerRunnable, mSecondInterval);
+    }
+
     public void removeTimerCallbacks() {
         mTimerHandler.removeCallbacks(mTimerRunnable);
     }
 
     public void resetTimerProgress() {
         mTimerProgress = 0;
+    }
+
+    public void resetTimerProgress(int progress) {
+        mTimerProgress = progress;
+    }
+
+    public void setTimerView(TimerView timerView) {
+        mTimerView = timerView;
+    }
+
+    public int getTimerProgress() {
+        return mTimerProgress;
     }
 }

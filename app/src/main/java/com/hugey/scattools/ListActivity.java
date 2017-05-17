@@ -1,6 +1,7 @@
 package com.hugey.scattools;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -31,6 +32,21 @@ public class ListActivity extends AppCompatActivity {
     private ListAdapter mAdapter;
     private RecyclerView mList;
     private Categories mCategories;
+    
+    private static final String EXTRA_PROGRESS = "progress";
+    private static final String EXTRA_TICKING = "ticking";
+    private static final String EXTRA_ROLLING = "rolling";
+    private static final String EXTRA_TIME = "time";
+    private static final String EXTRA_LETTER = "letter";
+    
+    public Intent getLaunchIntent(Context context, int progress, boolean ticking, boolean rolling, String currentTime, String currentLetter) {
+        return new Intent(context, ListActivity.class)
+                .putExtra("" + progress, EXTRA_PROGRESS)
+                .putExtra("" + ticking, EXTRA_TICKING)
+                .putExtra("" + rolling, EXTRA_ROLLING)
+                .putExtra("" + currentTime, EXTRA_TIME)
+                .putExtra("" + currentLetter, EXTRA_LETTER);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,16 +84,12 @@ public class ListActivity extends AppCompatActivity {
         String json = null;
         try {
             InputStream is = getResources().getAssets().open(assetName);
-            if (is != null) {
-                Log.d("We made it!", "hoh");
-            }
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
             is.close();
             json = new String(buffer, "UTF-8");
         } catch (IOException ex) {
-            Log.d("no bueno", "hoh");
             ex.printStackTrace();
             return null;
         }

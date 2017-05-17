@@ -10,9 +10,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.Random;
-//TODO Timer stuff in ScatTimer, Die stuff in ScatDie
+//TODO Timer stuff in ScatTimer, Die stuff in ScatDie, fix tapping die bug, BASE ACTIVITY for button/timer view components
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, ScatTimer.TimerView {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, ScatTimer.TimerView, ScatDie.DieView {
 
     private BottomNavigationView mBtnNav;
     private Button mBtnDie;
@@ -21,34 +21,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button mBtnList;
     private TextView mTvTimer;
 
-    private Handler mDieHandler = new Handler();
-    private int mDieProgress = 0;
-    private int mDieInterval = 80;
-    private int mCurrentLetter;
-    private boolean mIsPlaying;
+    private boolean mIsTicking = false;
+    private boolean mIsRolling = false;
 
     private ScatTimer mTimer;
 
     private String[] mLetters;
 
-    Runnable mDieRunnable = new Runnable() {
-        @Override
-        public void run() {
-            mDieProgress += mDieInterval;
-            if (mDieProgress < 1200) {
-                mDieHandler.postDelayed(mDieRunnable, mDieInterval);
-                mCurrentLetter++;
-                if (mLetters.length == mCurrentLetter) {
-                    mCurrentLetter = 0;
-                }
-                mBtnDie.setText(getRandom(mLetters));
-            } else {
-                mDieProgress = 0;
-            }
-        }
-    };
-
-
+    private ScatDie mDie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         mTimer = new ScatTimer(this);
+        mTimer.setTimerView(this);
+        mDie = new ScatDie(this, getResources().getStringArray(R.array.letters));
 
         mBtnNav = (BottomNavigationView) findViewById(R.id.list_nav_view);
         mBtnDie = (Button) findViewById(R.id.btn_go);
@@ -69,46 +51,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBtnDie.setOnClickListener(this);
         mBtnReset.setOnClickListener(this);
 
-
         mTvTimer.setText("2:30");
-        mCurrentLetter = 0;
-        mLetters = getResources().getStringArray(R.array.letters);
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mBtnDie.setText(getRandom(mLetters));
+        mDie.resetCurrentLetter();
+        mBtnDie.setText("!");
     }
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.btn_go) {
-            mDieHandler.postDelayed(mDieRunnable, mDieInterval);
+        if (view.getId() == R.id.btn_go && !mIsRolling) {
+            mDie.postDieDelayed();
+            mIsRolling = true;
         } else if (view.getId() == R.id.btn_play) {
-            if (!mIsPlaying) {
+            if (!mIsTicking) {
                 mTimer.postTimerDelay();
                 mBtnPlay.setText("Pause");
             } else {
                 mTimer.removeTimerCallbacks();
                 mBtnPlay.setText("Play");
             }
-            mIsPlaying = !mIsPlaying;
+            mIsTicking = !mIsTicking;
         } else if (view.getId() == R.id.btn_reset) {
             mTimer.removeTimerCallbacks();
             mTimer.resetTimerProgress();
             mBtnPlay.setText("Play");
             mTvTimer.setText("2:30");
-            mIsPlaying = false;
+            mIsTicking = false;
         } else if (view.getId() == R.id.activity_list_btn) {
         } else if (view.getId() == R.id.list_nav_view) {
             startActivity(new Intent(this, ListActivity.class));
         }
-    }
-
-    public static String getRandom(String[] array) {
-        int rnd = new Random().nextInt(array.length);
-        return array[rnd];
     }
 
     @Override
@@ -116,5 +88,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mTvTimer.setText(text);
     }
 
+    @Override
+    public void setIsRolling(boolean rolling) {
+        mIsRolling = rolling;
+    }
 
+    @Override
+    public void setDieText(String text) {
+        mBtnDie.setText(text);
+    }
 }
