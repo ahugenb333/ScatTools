@@ -37,12 +37,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <Button
-            android:id="@+id/btn_go"
+            android:id="@+id/btn_die"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
         <Button
-            android:id="@+id/btn_play"
+            android:id="@+id/btn_timer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>

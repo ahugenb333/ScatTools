@@ -3,6 +3,7 @@ package com.hugey.scattools;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -52,6 +53,13 @@ public class ListActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+
+        int progress = getIntent().getIntExtra(MainActivity.EXTRA_PROGRESS, -1);
+        String text = getIntent().getStringExtra(MainActivity.EXTRA_TEXT);
+
+        mBtnTimer = (Button) findViewById(R.id.btn_timer);
+        mBtnTimer.setText(text);
+
 
         Gson gson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
 

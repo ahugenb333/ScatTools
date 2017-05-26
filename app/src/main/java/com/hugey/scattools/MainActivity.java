@@ -14,6 +14,9 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, ScatTimer.TimerView, ScatDie.DieView {
 
+
+    public static final String EXTRA_PROGRESS = "progress";
+    public static final String EXTRA_TEXT = "text";
     private BottomNavigationView mBtnNav;
     private Button mBtnDie;
     private Button mBtnPlay;
@@ -79,7 +82,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mIsTicking = false;
         } else if (view.getId() == R.id.activity_list_btn) {
         } else if (view.getId() == R.id.list_nav_view) {
-            startActivity(new Intent(this, ListActivity.class));
+            int progress = mTimer.getTimerProgress();
+            String text = mTvTimer.getText().toString();
+
+            Intent startIntent = new Intent(this, ListActivity.class);
+
+            startIntent.putExtra(EXTRA_PROGRESS, progress);
+
+            startIntent.putExtra(EXTRA_TEXT, text);
+
+            startActivity(startIntent);
         }
     }
 
