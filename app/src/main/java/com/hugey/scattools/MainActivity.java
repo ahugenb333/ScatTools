@@ -22,7 +22,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button mBtnDie;
     private Button mBtnPlay;
     private Button mBtnReset;
+
     private Button mBtnList;
+    private Button mBtnTools;
+    private Button mBtnEditable;
+    
     private TextView mTvTimer;
 
     private boolean mIsTicking = false;
@@ -48,7 +52,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBtnPlay = (Button) findViewById(R.id.btn_play);
         mBtnReset = (Button) findViewById(R.id.btn_reset);
         mTvTimer = (TextView) findViewById(R.id.tv_timer);
-        mBtnList = (Button) findViewById(R.id.activity_list_btn);
+
+        mBtnList = (Button) findViewById(R.id.btn_list);
+        mBtnTools = (Button) findViewById(R.id.btn_tools);
+        mBtnEditable = (Button) findViewById(R.id.btn_editable);
+
+        //bottom menu buttons
+        mBtnList.setOnClickListener(this);
+        mBtnTools.setOnClickListener(this);
+        mBtnEditable.setOnClickListener(this);
 
         mBtnNav.setOnClickListener(this);
         mBtnPlay.setOnClickListener(this);
@@ -59,6 +71,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mDie.resetCurrentLetter();
         mBtnDie.setText("!");
+
+        View v = findViewById(R.id.activity_main);
+
+        v.setVisibility(View.GONE);
+
+
     }
 
     @Override
@@ -81,8 +99,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mBtnPlay.setText("Play");
             mTvTimer.setText("2:30");
             mIsTicking = false;
-        } else if (view.getId() == R.id.activity_list_btn) {
-        } else if (view.getId() == R.id.list_nav_view) {
+        } else if (view.getId() == R.id.btn_list) {
             int progress = mTimer.getTimerProgress();
             String text = mTvTimer.getText().toString();
 

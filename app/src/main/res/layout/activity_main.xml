@@ -74,20 +74,24 @@
             android:orientation="horizontal">
 
             <Button
-                android:layout_width="24dp"
+                android:id="@+id/btn_tools"
                 android:layout_height="match_parent"
-                android:background="@android:color/holo_red_dark" />
-
-            <View
-                android:layout_width="32dp"
-                android:layout_height="match_parent"
-                android:padding="4dp" />
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:background="@android:color/black" />
 
             <Button
-                android:id="@+id/activity_list_btn"
-                android:layout_width="24dp"
+                android:id="@+id/btn_list"
                 android:layout_height="match_parent"
-                android:background="@android:color/holo_red_dark" />
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:background="@android:color/black" />
+            <Button
+                android:id="@+id/btn_editable"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:background="@android:color/black" />
 
         </LinearLayout>
     </android.support.design.widget.BottomNavigationView>
