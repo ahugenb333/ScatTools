@@ -29,6 +29,7 @@ import java.util.List;
 public class ListActivity extends AppCompatActivity {
 
     private Button mBtnTimer;
+    private Button mBtnDie;
     private Button mBtnReset;
     private ListAdapter mAdapter;
     private RecyclerView mList;
@@ -56,9 +57,13 @@ public class ListActivity extends AppCompatActivity {
 
         int progress = getIntent().getIntExtra(MainActivity.EXTRA_PROGRESS, -1);
         String text = getIntent().getStringExtra(MainActivity.EXTRA_TEXT);
+        String die = getIntent().getStringExtra(MainActivity.EXTRA_DIE);
 
         mBtnTimer = (Button) findViewById(R.id.btn_timer);
         mBtnTimer.setText(text);
+
+        mBtnDie = (Button) findViewById(R.id.btn_die);
+        mBtnDie.setText(die);
 
 
         Gson gson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();

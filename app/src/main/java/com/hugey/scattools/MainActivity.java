@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public static final String EXTRA_PROGRESS = "progress";
     public static final String EXTRA_TEXT = "text";
+    public static final String EXTRA_DIE = "die";
     private BottomNavigationView mBtnNav;
     private Button mBtnDie;
     private Button mBtnPlay;
@@ -85,11 +86,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             int progress = mTimer.getTimerProgress();
             String text = mTvTimer.getText().toString();
 
+            String die = mBtnDie.getText().toString();
+
             Intent startIntent = new Intent(this, ListActivity.class);
 
             startIntent.putExtra(EXTRA_PROGRESS, progress);
 
             startIntent.putExtra(EXTRA_TEXT, text);
+
+            startIntent.putExtra(EXTRA_DIE, die);
 
             startActivity(startIntent);
         }
