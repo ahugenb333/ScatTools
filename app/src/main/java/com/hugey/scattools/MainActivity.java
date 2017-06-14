@@ -4,10 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.bluelinelabs.conductor.Controller;
 
 import java.util.Random;
 //TODO Timer stuff in ScatTimer, Die stuff in ScatDie, fix tapping die bug, BASE ACTIVITY for button/timer view components
@@ -18,21 +25,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final String EXTRA_PROGRESS = "progress";
     public static final String EXTRA_TEXT = "text";
     public static final String EXTRA_DIE = "die";
-    private BottomNavigationView mBtnNav;
-    private Button mBtnDie;
-    private Button mBtnPlay;
-    private Button mBtnReset;
 
-    private Button mBtnList;
-    private Button mBtnTools;
-    private Button mBtnEditable;
-    
-    private TextView mTvTimer;
 
     private boolean mIsTicking = false;
     private boolean mIsRolling = false;
 
+    private MyPagerAdapter mPagerAdapter;
+
+    private ViewPager mViewPager;
+
     private ScatTimer mTimer;
+
+    private Fragment ScatFragment;
 
     private String[] mLetters;
 
@@ -47,79 +51,81 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mTimer.setTimerView(this);
         mDie = new ScatDie(this, getResources().getStringArray(R.array.letters));
 
-        mBtnNav = (BottomNavigationView) findViewById(R.id.list_nav_view);
-        mBtnDie = (Button) findViewById(R.id.btn_go);
-        mBtnPlay = (Button) findViewById(R.id.btn_play);
-        mBtnReset = (Button) findViewById(R.id.btn_reset);
-        mTvTimer = (TextView) findViewById(R.id.tv_timer);
+        mViewPager = (ViewPager) findViewById(R.id.main_view_pager);
 
-        mBtnList = (Button) findViewById(R.id.btn_list);
-        mBtnTools = (Button) findViewById(R.id.btn_tools);
-        mBtnEditable = (Button) findViewById(R.id.btn_editable);
+        mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
 
-        //bottom menu buttons
-        mBtnList.setOnClickListener(this);
-        mBtnTools.setOnClickListener(this);
-        mBtnEditable.setOnClickListener(this);
+        mViewPager.setAdapter(mPagerAdapter);
 
-        mBtnNav.setOnClickListener(this);
-        mBtnPlay.setOnClickListener(this);
-        mBtnDie.setOnClickListener(this);
-        mBtnReset.setOnClickListener(this);
-
-        mTvTimer.setText("2:30");
-
-        mDie.resetCurrentLetter();
-        mBtnDie.setText("!");
-
-        View v = findViewById(R.id.activity_main);
-
-        v.setVisibility(View.GONE);
+        mViewPager.getAdapter().notifyDataSetChanged();
 
 
+
+//        mBtnDie = (Button) findViewById(R.id.btn_go);
+//        mBtnPlay = (Button) findViewById(R.id.btn_play);
+//        mBtnReset = (Button) findViewById(R.id.btn_reset);
+//        mTvTimer = (TextView) findViewById(R.id.tv_timer);
+//
+//        mBtnList = (Button) findViewById(R.id.btn_list);
+//        mBtnTools = (Button) findViewById(R.id.btn_tools);
+//        mBtnEditable = (Button) findViewById(R.id.btn_editable);
+//
+//        //bottom menu buttons
+//        mBtnList.setOnClickListener(this);
+//        mBtnTools.setOnClickListener(this);
+//        mBtnEditable.setOnClickListener(this);
+//
+//        mBtnPlay.setOnClickListener(this);
+//        mBtnDie.setOnClickListener(this);
+//        mBtnReset.setOnClickListener(this);
+//
+//        mTvTimer.setText("2:30");
+//
+//        mDie.resetCurrentLetter();
+//        mBtnDie.setText("!");
     }
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.btn_go && !mIsRolling) {
-            mDie.postDieDelayed();
-            mIsRolling = true;
-        } else if (view.getId() == R.id.btn_play) {
-            if (!mIsTicking) {
-                mTimer.postTimerDelay();
-                mBtnPlay.setText("Pause");
-            } else {
-                mTimer.removeTimerCallbacks();
-                mBtnPlay.setText("Play");
-            }
-            mIsTicking = !mIsTicking;
-        } else if (view.getId() == R.id.btn_reset) {
-            mTimer.removeTimerCallbacks();
-            mTimer.resetTimerProgress();
-            mBtnPlay.setText("Play");
-            mTvTimer.setText("2:30");
-            mIsTicking = false;
-        } else if (view.getId() == R.id.btn_list) {
-            int progress = mTimer.getTimerProgress();
-            String text = mTvTimer.getText().toString();
-
-            String die = mBtnDie.getText().toString();
-
-            Intent startIntent = new Intent(this, ListActivity.class);
-
-            startIntent.putExtra(EXTRA_PROGRESS, progress);
-
-            startIntent.putExtra(EXTRA_TEXT, text);
-
-            startIntent.putExtra(EXTRA_DIE, die);
-
-            startActivity(startIntent);
-        }
+//        if (view.getId() == R.id.btn_go && !mIsRolling) {
+//            mDie.postDieDelayed();
+//            mIsRolling = true;
+//        } else if (view.getId() == R.id.btn_play) {
+//            if (!mIsTicking) {
+//                mTimer.postTimerDelay();
+//                //mBtnPlay.setText("Pause");
+//            } else {
+//                mTimer.removeTimerCallbacks();
+//                //mBtnPlay.setText("Play");
+//            }
+//            mIsTicking = !mIsTicking;
+//        } else if (view.getId() == R.id.btn_reset) {
+//            mTimer.removeTimerCallbacks();
+//            mTimer.resetTimerProgress();
+//            mBtnPlay.setText("Play");
+//            mTvTimer.setText("2:30");
+//            mIsTicking = false;
+//        } else if (view.getId() == R.id.btn_list) {
+//            int progress = mTimer.getTimerProgress();
+//            String text = mTvTimer.getText().toString();
+//
+//            String die = mBtnDie.getText().toString();
+//
+//            Intent startIntent = new Intent(this, ListActivity.class);
+//
+//            startIntent.putExtra(EXTRA_PROGRESS, progress);
+//
+//            startIntent.putExtra(EXTRA_TEXT, text);
+//
+//            startIntent.putExtra(EXTRA_DIE, die);
+//
+//            startActivity(startIntent);
+//        }
     }
 
     @Override
     public void setTimerText(String text) {
-        mTvTimer.setText(text);
+        //mTvTimer.setText(text);
     }
 
     @Override
@@ -129,6 +135,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void setDieText(String text) {
-        mBtnDie.setText(text);
+        //mBtnDie.setText(text);
     }
+
+    public static class MyPagerAdapter extends FragmentPagerAdapter {
+        private static int NUM_ITEMS = 1;
+
+        private ScatView mScatView;
+
+        public MyPagerAdapter(FragmentManager fragmentManager) {
+            super(fragmentManager);
+
+            mScatView = new ScatView();
+        }
+
+        // Returns total number of pages
+        @Override
+        public int getCount() {
+            return NUM_ITEMS;
+        }
+
+        // Returns the fragment to display for that page
+        @Override
+        public Fragment getItem(int position) {
+            return mScatView;
+        }
+
+        // Returns the page title for the top indicator
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return "Page " + position;
+        }
+
+    }
+
 }
