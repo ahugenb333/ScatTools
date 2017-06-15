@@ -7,6 +7,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -26,6 +27,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final String EXTRA_TEXT = "text";
     public static final String EXTRA_DIE = "die";
 
+
+    private Button mBtnList;
+    private Button mBtnTools;
+    private Button mBtnEditable;
 
     private boolean mIsTicking = false;
     private boolean mIsRolling = false;
@@ -57,18 +62,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mViewPager.setAdapter(mPagerAdapter);
 
-        mViewPager.getAdapter().notifyDataSetChanged();
-
-
 
 //        mBtnDie = (Button) findViewById(R.id.btn_go);
 //        mBtnPlay = (Button) findViewById(R.id.btn_play);
 //        mBtnReset = (Button) findViewById(R.id.btn_reset);
-//        mTvTimer = (TextView) findViewById(R.id.tv_timer);
+//        mTvTimer = (TextView) findViewById(R.id.tv_timer); z
 //
-//        mBtnList = (Button) findViewById(R.id.btn_list);
-//        mBtnTools = (Button) findViewById(R.id.btn_tools);
-//        mBtnEditable = (Button) findViewById(R.id.btn_editable);
+        mBtnList = (Button) findViewById(R.id.btn_list);
+        mBtnTools = (Button) findViewById(R.id.btn_tools);
+        mBtnEditable = (Button) findViewById(R.id.btn_editable);
+
+        mBtnList.setOnClickListener(this);
+        mBtnTools.setOnClickListener(this);
+        mBtnEditable.setOnClickListener(this);
 //
 //        //bottom menu buttons
 //        mBtnList.setOnClickListener(this);
@@ -105,22 +111,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //            mBtnPlay.setText("Play");
 //            mTvTimer.setText("2:30");
 //            mIsTicking = false;
-//        } else if (view.getId() == R.id.btn_list) {
-//            int progress = mTimer.getTimerProgress();
-//            String text = mTvTimer.getText().toString();
-//
-//            String die = mBtnDie.getText().toString();
-//
-//            Intent startIntent = new Intent(this, ListActivity.class);
-//
-//            startIntent.putExtra(EXTRA_PROGRESS, progress);
-//
-//            startIntent.putExtra(EXTRA_TEXT, text);
-//
-//            startIntent.putExtra(EXTRA_DIE, die);
-//
-//            startActivity(startIntent);
-//        }
+        if (view.getId() == R.id.btn_tools) {
+            mViewPager.setCurrentItem(0);
+        }
+        if (view.getId() == R.id.btn_list) {
+            mViewPager.setCurrentItem(1);
+        }
+        if (view.getId() == R.id.btn_editable) {
+            mViewPager.setCurrentItem(3);
+        }
     }
 
     @Override
@@ -138,15 +137,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //mBtnDie.setText(text);
     }
 
-    public static class MyPagerAdapter extends FragmentPagerAdapter {
-        private static int NUM_ITEMS = 1;
+    public static class MyPagerAdapter extends FragmentStatePagerAdapter {
+        private static int NUM_ITEMS = 3;
 
         private ScatView mScatView;
+        private ListView mListView;
+        private ScatView mTab3ScatView;
 
         public MyPagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
 
             mScatView = new ScatView();
+            mListView = new ListView();
+            mTab3ScatView = new ScatView();
         }
 
         // Returns total number of pages
@@ -158,7 +161,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Returns the fragment to display for that page
         @Override
         public Fragment getItem(int position) {
-            return mScatView;
+            if (position == 0) {
+                return mScatView;
+            }
+            if (position == 1) {
+                return mListView;
+            }
+            if (position == 2) {
+                return mTab3ScatView;
+            }
+            return null;
         }
 
         // Returns the page title for the top indicator
