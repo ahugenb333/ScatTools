@@ -1,23 +1,15 @@
 package com.hugey.scattools;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
-
-import com.bluelinelabs.conductor.Controller;
-
-import java.util.Random;
 //TODO Timer stuff in ScatTimer, Die stuff in ScatDie, fix tapping die bug, BASE ACTIVITY for button/timer view components
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, ScatTimer.TimerView, ScatDie.DieView {
@@ -62,12 +54,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mViewPager.setAdapter(mPagerAdapter);
 
-
-//        mBtnDie = (Button) findViewById(R.id.btn_go);
-//        mBtnPlay = (Button) findViewById(R.id.btn_play);
-//        mBtnReset = (Button) findViewById(R.id.btn_reset);
-//        mTvTimer = (TextView) findViewById(R.id.tv_timer); z
-//
         mBtnList = (Button) findViewById(R.id.btn_list);
         mBtnTools = (Button) findViewById(R.id.btn_tools);
         mBtnEditable = (Button) findViewById(R.id.btn_editable);
@@ -85,15 +71,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        mBtnDie.setOnClickListener(this);
 //        mBtnReset.setOnClickListener(this);
 //
-//        mTvTimer.setText("2:30");
-//
 //        mDie.resetCurrentLetter();
 //        mBtnDie.setText("!");
     }
 
     @Override
     public void onClick(View view) {
-//        if (view.getId() == R.id.btn_go && !mIsRolling) {
+//        if (view.getId() == R.id.btn_die && !mIsRolling) {
 //            mDie.postDieDelayed();
 //            mIsRolling = true;
 //        } else if (view.getId() == R.id.btn_play) {
@@ -105,7 +89,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                //mBtnPlay.setText("Play");
 //            }
 //            mIsTicking = !mIsTicking;
-//        } else if (view.getId() == R.id.btn_reset) {
+//        }
+//        else if (view.getId() == R.id.btn_reset) {
 //            mTimer.removeTimerCallbacks();
 //            mTimer.resetTimerProgress();
 //            mBtnPlay.setText("Play");
@@ -118,13 +103,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mViewPager.setCurrentItem(1);
         }
         if (view.getId() == R.id.btn_editable) {
-            mViewPager.setCurrentItem(3);
+            mViewPager.setCurrentItem(2);
         }
     }
 
     @Override
     public void setTimerText(String text) {
         //mTvTimer.setText(text);
+        ((ScatTimer.TimerView) mPagerAdapter.getItem(mViewPager.getCurrentItem())).setTimerText(text);
     }
 
     @Override
@@ -134,11 +120,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void setDieText(String text) {
-        //mBtnDie.setText(text);
+        ((ScatDie.DieView) mPagerAdapter.getItem(mViewPager.getCurrentItem())).setDieText(text);
     }
 
     public static class MyPagerAdapter extends FragmentStatePagerAdapter {
-        private static int NUM_ITEMS = 3;
+        private static int NUM_ITEMS = 2;
 
         private ScatView mScatView;
         private ListView mListView;
@@ -149,7 +135,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             mScatView = new ScatView();
             mListView = new ListView();
-            mTab3ScatView = new ScatView();
+            //mTab3ScatView = new ScatView();
+        }
+
+        public void setListener(View.OnClickListener listener) {
+//            mScatView.setListener(listener);
+            //mListView.setListener(listener);
+            //mTab3ScatView.setListener(listener);
         }
 
         // Returns total number of pages
@@ -167,10 +159,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (position == 1) {
                 return mListView;
             }
-            if (position == 2) {
-                return mTab3ScatView;
-            }
+//            if (position == 2) {
+//                return mTab3ScatView;
+//            }
             return null;
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return super.isViewFromObject(view, object);
         }
 
         // Returns the page title for the top indicator
@@ -178,7 +175,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public CharSequence getPageTitle(int position) {
             return "Page " + position;
         }
-
     }
 
 }

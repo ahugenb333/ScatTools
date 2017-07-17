@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/btn_go"
+        android:id="@+id/btn_die"
         android:layout_width="match_parent"
         android:layout_height="0dp"
 

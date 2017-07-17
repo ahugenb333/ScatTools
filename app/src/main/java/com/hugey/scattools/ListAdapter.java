@@ -25,6 +25,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.CategoryViewHo
     public ListAdapter(Context context) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
+        this.categories = new ArrayList<>();
     }
     
     public void setCategories(List<Category> categories) {

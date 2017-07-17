@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,33 +18,32 @@ import android.widget.TextView;
  * Created by ryanhugenberg on 6/13/17.
  */
 
-public class ListView extends Fragment {
-    private static final String TAG = "ScatView";
+public class ListView extends ScatView {
 
-    private Button mBtnDie;
-    private Button mBtnPlay;
-    private Button mBtnReset;
-
-
-    private TextView mTvTimer;
+    private ListAdapter mAdapter;
+    private RecyclerView mList;
+    private Categories mCategories;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.view_list, container, false);
+        View v = super.onCreateView(inflater, container, savedInstanceState);
 
-//        mBtnDie = (Button) v.findViewById(R.id.btn_go);
-//        mBtnPlay = (Button) v.findViewById(R.id.btn_play);
-//        mBtnReset = (Button) v.findViewById(R.id.btn_reset);
-//        mTvTimer = (TextView) v.findViewById(R.id.tv_timer);
-//
-//        mTvTimer.setText("2:30");
-//        mBtnDie.setText("1");
+        mList = (RecyclerView) v.findViewById(R.id.list_recycler);
+
+        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        mList.setLayoutManager(manager);
+
+        mAdapter = new ListAdapter(getContext());
+
+
+        mList.setAdapter(mAdapter);
 
         return v;
     }
 
-
-
-
+    @Override
+    public int getLayoutId() {
+        return R.layout.view_list;
+    }
 }
