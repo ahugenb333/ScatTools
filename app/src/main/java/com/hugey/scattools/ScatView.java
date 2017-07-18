@@ -3,6 +3,7 @@ package com.hugey.scattools;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,12 +22,20 @@ public class ScatView extends Fragment implements ScatTimer.TimerView, ScatDie.D
     private Button mBtnPlay;
     private Button mBtnReset;
 
+    private static final String PLAY = "Play";
+    private static final String PAUSE = "Pause";
+    private static final String RESUME = "Resume";
+
+    private static final String DIE_DEFAULT = "!";
+    private static final String TIMER_DEFAULT = "2:30";
+
+
     private TextView mTvTimer;
 
-    public void setListener(View.OnClickListener listener) {
-        mBtnDie.setOnClickListener(listener);
-        mBtnPlay.setOnClickListener(listener);
-        mBtnReset.setOnClickListener(listener);
+    private ScatViewListener listener;
+
+    public void setListener(ScatViewListener listener) {
+        this.listener = listener;
     }
 
     @Override
@@ -46,23 +55,15 @@ public class ScatView extends Fragment implements ScatTimer.TimerView, ScatDie.D
 
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(getLayoutId(), container, false);
+        View v = inflater.inflate(R.layout.view_main, container, false);
 
         mBtnDie = (Button) v.findViewById(R.id.btn_die);
         mBtnPlay = (Button) v.findViewById(R.id.btn_play);
         mBtnReset = (Button) v.findViewById(R.id.btn_reset);
         mTvTimer = (TextView) v.findViewById(R.id.tv_timer);
-
-
-//        mBtnPlay.setOnClickListener(this);
 
         return v;
     }
@@ -71,16 +72,46 @@ public class ScatView extends Fragment implements ScatTimer.TimerView, ScatDie.D
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mTvTimer.setText("2:30");
-//        mBtnDie.setText("1");
-    }
+        mTvTimer.setText(TIMER_DEFAULT);
+        mBtnDie.setText(DIE_DEFAULT);
 
-    public int getLayoutId() {
-        return R.layout.view_main;
+        mBtnDie.setOnClickListener(this);
+        mBtnPlay.setOnClickListener(this);
+        mBtnReset.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
+        if (v.getId() == R.id.btn_play) {
 
+            String s = mBtnPlay.getText().toString();
+            if (s.equals(PLAY)) {
+                mBtnPlay.setText(PAUSE);
+                Log.d("Pressed play: ", s);
+            } else if (s.equals(PAUSE)) {
+                mBtnPlay.setText(RESUME);
+                Log.d("Pressed pause: ", s);
+            } else if (s.equals(RESUME)) {
+                mBtnPlay.setText(PAUSE);
+                Log.d("Pressed resume: ", s);
+            }
+
+            listener.onPlayClicked();
+        } else if (v.getId() == R.id.btn_die) {
+            listener.onDieClicked();
+        } else if (v.getId() == R.id.btn_reset) {
+            mTvTimer.setText(TIMER_DEFAULT);
+            mBtnPlay.setText(PLAY);
+            listener.onResetClicked();
+        }
+    }
+
+    public interface ScatViewListener {
+
+        void onPlayClicked();
+
+        void onResetClicked();
+
+        void onDieClicked();
     }
 }

@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 //TODO Timer stuff in ScatTimer, Die stuff in ScatDie, fix tapping die bug, BASE ACTIVITY for button/timer view components
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, ScatTimer.TimerView, ScatDie.DieView {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, ScatView.ScatViewListener, ScatTimer.TimerView, ScatDie.DieView {
 
 
     public static final String EXTRA_PROGRESS = "progress";
@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         mTimer = new ScatTimer(this);
+        //todo use scatview or listview for timerview and dieview, handle switching
         mTimer.setTimerView(this);
         mDie = new ScatDie(this, getResources().getStringArray(R.array.letters));
 
@@ -53,6 +54,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
 
         mViewPager.setAdapter(mPagerAdapter);
+
+        mPagerAdapter.setListener(this);
+
 
         mBtnList = (Button) findViewById(R.id.btn_list);
         mBtnTools = (Button) findViewById(R.id.btn_tools);
@@ -77,25 +81,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-//        if (view.getId() == R.id.btn_die && !mIsRolling) {
-//            mDie.postDieDelayed();
-//            mIsRolling = true;
-//        } else if (view.getId() == R.id.btn_play) {
-//            if (!mIsTicking) {
-//                mTimer.postTimerDelay();
-//                //mBtnPlay.setText("Pause");
-//            } else {
-//                mTimer.removeTimerCallbacks();
-//                //mBtnPlay.setText("Play");
-//            }
-//            mIsTicking = !mIsTicking;
-//        }
-//        else if (view.getId() == R.id.btn_reset) {
-//            mTimer.removeTimerCallbacks();
-//            mTimer.resetTimerProgress();
-//            mBtnPlay.setText("Play");
-//            mTvTimer.setText("2:30");
-//            mIsTicking = false;
         if (view.getId() == R.id.btn_tools) {
             mViewPager.setCurrentItem(0);
         }
@@ -104,6 +89,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         if (view.getId() == R.id.btn_editable) {
             mViewPager.setCurrentItem(2);
+        }
+    }
+
+    /** @link ScatView.ScatViewListener **/
+    @Override
+    public void onPlayClicked() {
+        if (!mIsTicking) {
+            mTimer.postTimerDelay();
+        } else {
+            mTimer.removeTimerCallbacks();
+        }
+        mIsTicking = !mIsTicking;
+    }
+
+    @Override
+    public void onResetClicked() {
+        mTimer.removeTimerCallbacks();
+        mTimer.resetTimerProgress();
+
+        mIsTicking = false;
+    }
+
+    @Override
+    public void onDieClicked() {
+        if (!mIsRolling) {
+            mDie.postDieDelayed();
+            mIsRolling = true;
         }
     }
 
@@ -138,12 +150,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //mTab3ScatView = new ScatView();
         }
 
-        public void setListener(View.OnClickListener listener) {
-//            mScatView.setListener(listener);
-            //mListView.setListener(listener);
-            //mTab3ScatView.setListener(listener);
-        }
-
         // Returns total number of pages
         @Override
         public int getCount() {
@@ -175,6 +181,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public CharSequence getPageTitle(int position) {
             return "Page " + position;
         }
+
+        public void setListener(ScatView.ScatViewListener listener) {
+            mScatView.setListener(listener);
+        }
     }
+
 
 }
