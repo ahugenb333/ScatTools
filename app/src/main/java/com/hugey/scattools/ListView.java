@@ -1,14 +1,11 @@
 package com.hugey.scattools;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,15 +16,43 @@ import android.widget.TextView;
  * Created by ryanhugenberg on 6/13/17.
  */
 
-public class ListView extends Fragment implements ScatDie.DieView, ScatTimer.TimerView {
+public class ListView extends Fragment implements View.OnClickListener, ScatDie.DieView, ScatTimer.TimerView {
 
     private Button mBtnDie;
-    private Button mBtnPlay;
     private Button mBtnReset;
+    private Button mBtnTimer;
+
+    private TextView mTvPlay;
 
     private ListAdapter mAdapter;
     private RecyclerView mList;
     private Categories mCategories;
+
+    private ListViewListener listener;
+
+    private static final String PLAY = "Play";
+    private static final String PAUSE = "Pause";
+    private static final String RESUME = "Resume";
+
+    private static final String DIE_DEFAULT = "!";
+    private static final String TIMER_DEFAULT = "2:30";
+
+    public interface ListViewListener {
+
+        void onDieClicked();
+
+        void onPlayClicked();
+
+        void onResetClicked();
+
+    }
+
+    //TODO: onListIdListener - textwatcher / randomize button click - list operations
+
+
+    public void setListener(ListViewListener listener) {
+        this.listener = listener;
+    }
 
     @Nullable
     @Override
@@ -36,8 +61,10 @@ public class ListView extends Fragment implements ScatDie.DieView, ScatTimer.Tim
 
 
         mBtnDie = (Button) v.findViewById(R.id.list_btn_die);
-        mBtnPlay = (Button) v.findViewById(R.id.list_btn_play);
         mBtnReset = (Button) v.findViewById(R.id.list_btn_reset);
+        mBtnTimer = (Button) v.findViewById(R.id.list_btn_timer);
+
+        mTvPlay = (TextView) v.findViewById(R.id.list_tv_play);
 
         mList = (RecyclerView) v.findViewById(R.id.list_recycler);
 
@@ -56,13 +83,45 @@ public class ListView extends Fragment implements ScatDie.DieView, ScatTimer.Tim
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mBtnPlay.setText("2:30");
-        
+        mTvPlay.setText(PLAY);
+        mBtnTimer.setText(TIMER_DEFAULT);
+        mBtnDie.setText(DIE_DEFAULT);
+
+        mBtnTimer.setOnClickListener(this);
+        mBtnDie.setOnClickListener(this);
+        mBtnReset.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.list_btn_timer) {
+
+            String s = mTvPlay.getText().toString();
+            if (s.equals(PLAY)) {
+                mTvPlay.setText(PAUSE);
+                Log.d("Pressed play: ", s);
+            } else if (s.equals(PAUSE)) {
+                mTvPlay.setText(RESUME);
+                Log.d("Pressed pause: ", s);
+            } else if (s.equals(RESUME)) {
+                mTvPlay.setText(PAUSE);
+                Log.d("Pressed resume: ", s);
+            }
+
+            listener.onPlayClicked();
+        } else if (v.getId() == R.id.list_btn_die) {
+            listener.onDieClicked();
+        } else if (v.getId() == R.id.list_btn_reset) {
+            mBtnTimer.setText(TIMER_DEFAULT);
+            mTvPlay.setText(PLAY);
+            mBtnDie.setText(DIE_DEFAULT);
+            listener.onResetClicked();
+        }
     }
 
     @Override
     public void setDieText(String text) {
-
+        mBtnDie.setText(text);
     }
 
     @Override
@@ -72,6 +131,6 @@ public class ListView extends Fragment implements ScatDie.DieView, ScatTimer.Tim
 
     @Override
     public void setTimerText(String text) {
-
+        mBtnTimer.setText(text);
     }
 }

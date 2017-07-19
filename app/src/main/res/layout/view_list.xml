@@ -21,7 +21,7 @@
             android:text="Tap To Roll" />
 
         <TextView
-            android:id="@+id/list_tv_timer"
+            android:id="@+id/list_tv_play"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -51,7 +51,7 @@
             android:textColor="@android:color/white"/>
 
         <Button
-            android:id="@+id/list_btn_play"
+            android:id="@+id/list_btn_timer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

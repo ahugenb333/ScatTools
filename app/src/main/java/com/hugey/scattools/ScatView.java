@@ -102,6 +102,7 @@ public class ScatView extends Fragment implements ScatTimer.TimerView, ScatDie.D
         } else if (v.getId() == R.id.btn_reset) {
             mTvTimer.setText(TIMER_DEFAULT);
             mBtnPlay.setText(PLAY);
+            mBtnDie.setText(DIE_DEFAULT);
             listener.onResetClicked();
         }
     }

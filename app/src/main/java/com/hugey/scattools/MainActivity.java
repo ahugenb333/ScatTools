@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 //TODO Timer stuff in ScatTimer, Die stuff in ScatDie, fix tapping die bug, BASE ACTIVITY for button/timer view components
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, ScatView.ScatViewListener, ScatTimer.TimerView, ScatDie.DieView {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, ScatView.ScatViewListener, ListView.ListViewListener, ScatTimer.TimerView, ScatDie.DieView {
 
 
     public static final String EXTRA_PROGRESS = "progress";
@@ -55,7 +55,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mViewPager.setAdapter(mPagerAdapter);
 
-        mPagerAdapter.setListener(this);
+        mPagerAdapter.setScatListener(this);
+        mPagerAdapter.setListListener(this);
 
 
         mBtnList = (Button) findViewById(R.id.btn_list);
@@ -182,8 +183,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return "Page " + position;
         }
 
-        public void setListener(ScatView.ScatViewListener listener) {
+        public void setScatListener(ScatView.ScatViewListener listener) {
             mScatView.setListener(listener);
+        }
+
+        public void setListListener(ListView.ListViewListener listener) {
+            mListView.setListener(listener);
         }
     }
 
