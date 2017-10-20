@@ -62,8 +62,6 @@ public class ListView extends Fragment implements View.OnClickListener, ScatDie.
 
     }
 
-    //TODO: onListIdListener - textwatcher / randomize button click - list operations
-
 
     public void setListener(ListViewListener listener) {
         this.listener = listener;
