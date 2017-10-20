@@ -72,6 +72,29 @@
             android:textColor="@android:color/white"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/list_et_id"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:hint="List ID"/>
+
+        <Button
+            android:id="@+id/list_btn_randomize"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="Randomize"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list_recycler"

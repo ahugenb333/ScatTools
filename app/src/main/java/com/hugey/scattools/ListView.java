@@ -6,11 +6,15 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -24,12 +28,14 @@ import java.util.List;
  * Created by ryanhugenberg on 6/13/17.
  */
 
-public class ListView extends Fragment implements View.OnClickListener, ScatDie.DieView, ScatTimer.TimerView {
+public class ListView extends Fragment implements View.OnClickListener, ScatDie.DieView, ScatTimer.TimerView, TextWatcher {
 
     private Button mBtnDie;
     private Button mBtnReset;
     private Button mBtnTimer;
 
+    private EditText mEtListId;
+    private Button mBtnRandomize;
 
     private TextView mTvPlay;
 
@@ -73,6 +79,11 @@ public class ListView extends Fragment implements View.OnClickListener, ScatDie.
         mBtnReset = (Button) v.findViewById(R.id.list_btn_reset);
         mBtnTimer = (Button) v.findViewById(R.id.list_btn_timer);
 
+        mEtListId = (EditText) v.findViewById(R.id.list_et_id);
+        mBtnRandomize = (Button) v.findViewById(R.id.list_btn_randomize);
+
+        mEtListId.addTextChangedListener(this);
+
         mTvPlay = (TextView) v.findViewById(R.id.list_tv_play);
 
         mList = (RecyclerView) v.findViewById(R.id.list_recycler);
@@ -88,13 +99,6 @@ public class ListView extends Fragment implements View.OnClickListener, ScatDie.
         Gson gson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
 
         mCategories = gson.fromJson(loadJSONFromAsset("category.json"), Categories.class);
-
-
-        List<Category> listOne = mCategories.getListByID(1);
-
-        for (int i = 0; i < listOne.size(); i++) {
-            Log.d("id: " + listOne.get(i).getId(), "   category asdf: " + listOne.get(i).getCategory());
-        }
 
         mAdapter.setCategories(mCategories.getListByID(1));
 
@@ -150,6 +154,32 @@ public class ListView extends Fragment implements View.OnClickListener, ScatDie.
 
     @Override
     public void setIsRolling(boolean rolling) {
+
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        if (!TextUtils.isEmpty(charSequence)){
+            Log.d("editText ID: " + charSequence, "asdf");
+            int id = Integer.parseInt(charSequence.toString());
+            if (id < mCategories.getCategories().size()) {
+                List<Category> cat = mCategories.getCategories();
+                for (int z = 0; z < cat.size(); z++) {
+                    Log.d("category id:" + cat.get(z).getId() + " category: " + cat.get(z).getCategory(), "asdf");
+                }
+                mAdapter.setCategories(mCategories.getListByID(id));
+                mAdapter.notifyDataSetChanged();
+            }
+        }
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
 
     }
 
