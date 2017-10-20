@@ -1,6 +1,7 @@
 package com.hugey.scattools;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -45,6 +46,14 @@ public class Categories {
                 mult = mult + startMod;
             }
             return toReturn;
+        }
+
+        public ArrayList<Category> getRandomizedCategories() {
+            int d = (int)Math.floor(Math.random() * categories.size() + 1);
+            Log.d("Random number: " + d, "asdf");
+
+
+            return getListByID(d);
         }
 
 

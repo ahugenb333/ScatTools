@@ -118,6 +118,7 @@ public class ListView extends Fragment implements View.OnClickListener, ScatDie.
         mBtnTimer.setOnClickListener(this);
         mBtnDie.setOnClickListener(this);
         mBtnReset.setOnClickListener(this);
+        mBtnRandomize.setOnClickListener(this);
     }
 
     @Override
@@ -144,6 +145,9 @@ public class ListView extends Fragment implements View.OnClickListener, ScatDie.
             mTvPlay.setText(PLAY);
             mBtnDie.setText(DIE_DEFAULT);
             listener.onResetClicked();
+        } else if (v.getId() == R.id.list_btn_randomize) {
+            mAdapter.setCategories(mCategories.getRandomizedCategories());
+            mAdapter.notifyDataSetChanged();
         }
     }
 
