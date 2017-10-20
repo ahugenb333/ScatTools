@@ -122,7 +122,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void setTimerText(String text) {
-        //mTvTimer.setText(text);
         ((ScatTimer.TimerView) mPagerAdapter.getItem(mViewPager.getCurrentItem())).setTimerText(text);
     }
 

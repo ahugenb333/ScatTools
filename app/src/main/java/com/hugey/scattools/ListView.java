@@ -1,6 +1,7 @@
 package com.hugey.scattools;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+
 /**
  * Created by ryanhugenberg on 6/13/17.
  */
@@ -21,6 +29,7 @@ public class ListView extends Fragment implements View.OnClickListener, ScatDie.
     private Button mBtnDie;
     private Button mBtnReset;
     private Button mBtnTimer;
+
 
     private TextView mTvPlay;
 
@@ -75,6 +84,21 @@ public class ListView extends Fragment implements View.OnClickListener, ScatDie.
 
 
         mList.setAdapter(mAdapter);
+
+        Gson gson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
+
+        mCategories = gson.fromJson(loadJSONFromAsset("category.json"), Categories.class);
+
+
+        List<Category> listOne = mCategories.getListByID(1);
+
+        for (int i = 0; i < listOne.size(); i++) {
+            Log.d("id: " + listOne.get(i).getId(), "   category asdf: " + listOne.get(i).getCategory());
+        }
+
+        mAdapter.setCategories(mCategories.getListByID(1));
+
+        mAdapter.notifyDataSetChanged();
 
         return v;
     }
@@ -132,5 +156,21 @@ public class ListView extends Fragment implements View.OnClickListener, ScatDie.
     @Override
     public void setTimerText(String text) {
         mBtnTimer.setText(text);
+    }
+
+    public String loadJSONFromAsset(@NonNull String assetName) {
+        String json = null;
+        try {
+            InputStream is = getResources().getAssets().open(assetName);
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return json;
     }
 }
