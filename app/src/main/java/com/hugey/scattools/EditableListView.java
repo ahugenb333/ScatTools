@@ -43,7 +43,7 @@ public class EditableListView extends Fragment implements View.OnClickListener, 
     private RecyclerView mList;
     private Categories mCategories;
 
-    private ListViewListener listener;
+    private EditableListViewListener listener;
 
     private static final String PLAY = "Play";
     private static final String PAUSE = "Pause";
@@ -52,18 +52,17 @@ public class EditableListView extends Fragment implements View.OnClickListener, 
     private static final String DIE_DEFAULT = "!";
     private static final String TIMER_DEFAULT = "2:30";
 
-    public interface ListViewListener {
+    public interface EditableListViewListener {
 
         void onDieClicked();
 
         void onPlayClicked();
 
         void onResetClicked();
-
     }
 
 
-    public void setListener(ListViewListener listener) {
+    public void setListener(EditableListViewListener listener) {
         this.listener = listener;
     }
 

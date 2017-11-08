@@ -1,16 +1,18 @@
 package com.hugey.scattools;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 //TODO Timer stuff in ScatTimer, Die stuff in ScatDie, fix tapping die bug, BASE ACTIVITY for button/timer view components
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, ScatView.ScatViewListener, ListView.ListViewListener, ScatTimer.TimerView, ScatDie.DieView {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, ScatView.ScatViewListener, ListView.ListViewListener, EditableListView.EditableListViewListener, ScatTimer.TimerView, ScatDie.DieView {
 
 
     public static final String EXTRA_PROGRESS = "progress";
@@ -37,13 +39,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private ScatDie mDie;
 
+    private String mDieText;
+    private String mTimerText;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         mTimer = new ScatTimer(this);
-        //todo use scatview or listview for timerview and dieview, handle switching
         mTimer.setTimerView(this);
         mDie = new ScatDie(this, getResources().getStringArray(R.array.letters));
 
@@ -55,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mPagerAdapter.setScatListener(this);
         mPagerAdapter.setListListener(this);
+        mPagerAdapter.setEditableListListener(this);
 
 
         mBtnList = (Button) findViewById(R.id.btn_list);
@@ -89,6 +95,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (view.getId() == R.id.btn_editable) {
             mViewPager.setCurrentItem(2);
         }
+        if (!TextUtils.isEmpty(mTimerText)) {
+            setTimerText(mTimerText);
+        }
+        if (!TextUtils.isEmpty(mDieText)) {
+            setDieText(mDieText);
+        }
+
+        //todo update buttons for ticking, rolling play/pause
     }
 
     /** @link ScatView.ScatViewListener **/
@@ -119,7 +133,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void setTimerText(String text) {
+    public void setTimerText(@NonNull String text) {
+        mTimerText = text;
         ((ScatTimer.TimerView) mPagerAdapter.getItem(mViewPager.getCurrentItem())).setTimerText(text);
     }
 
@@ -129,7 +144,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void setDieText(String text) {
+    public void setDieText(@NonNull String text) {
+        mDieText = text;
         ((ScatDie.DieView) mPagerAdapter.getItem(mViewPager.getCurrentItem())).setDieText(text);
     }
 
@@ -186,6 +202,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         public void setListListener(ListView.ListViewListener listener) {
             mListView.setListener(listener);
+        }
+
+        public void setEditableListListener(EditableListView.EditableListViewListener listener) {
+            mEditableListView.setListener(listener);
         }
     }
 
