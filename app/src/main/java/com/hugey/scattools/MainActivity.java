@@ -6,9 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 //TODO Timer stuff in ScatTimer, Die stuff in ScatDie, fix tapping die bug, BASE ACTIVITY for button/timer view components
 
@@ -136,18 +134,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public static class MyPagerAdapter extends FragmentStatePagerAdapter {
-        private static int NUM_ITEMS = 2;
+        private static int NUM_ITEMS = 3;
 
         private ScatView mScatView;
         private ListView mListView;
-        private ScatView mTab3ScatView;
+        private EditableListView mEditableListView;
 
         public MyPagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
 
             mScatView = new ScatView();
             mListView = new ListView();
-            //mTab3ScatView = new ScatView();
+            mEditableListView = new EditableListView();
         }
 
         // Returns total number of pages
@@ -165,9 +163,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (position == 1) {
                 return mListView;
             }
-//            if (position == 2) {
-//                return mTab3ScatView;
-//            }
+            if (position == 2) {
+                return mEditableListView;
+            }
             return null;
         }
 
