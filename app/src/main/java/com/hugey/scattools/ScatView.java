@@ -51,6 +51,17 @@ public class ScatView extends Fragment implements ScatTimer.TimerView, ScatDie.D
     }
 
     @Override
+    public void setIsTicking(int ticking) {
+        if (ticking == ScatTimer.TICKING_PLAY) {
+            mBtnPlay.setText(PLAY);
+        } else if (ticking == ScatTimer.TICKING_PAUSE) {
+            mBtnPlay.setText(PAUSE);
+        } else if (ticking == ScatTimer.TICKING_RESUME) {
+            mBtnPlay.setText(RESUME);
+        }
+    }
+
+    @Override
     public void setIsRolling(boolean rolling) {
 
     }

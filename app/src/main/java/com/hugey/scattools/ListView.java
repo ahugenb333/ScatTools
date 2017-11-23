@@ -190,6 +190,17 @@ public class ListView extends Fragment implements View.OnClickListener, ScatDie.
         mBtnTimer.setText(text);
     }
 
+    @Override
+    public void setIsTicking(int ticking) {
+        if (ticking == ScatTimer.TICKING_PLAY) {
+            mTvPlay.setText(PLAY);
+        } else if (ticking == ScatTimer.TICKING_PAUSE) {
+            mTvPlay.setText(PAUSE);
+        } else if (ticking == ScatTimer.TICKING_RESUME) {
+            mTvPlay.setText(RESUME);
+        }
+    }
+
     public String loadJSONFromAsset(@NonNull String assetName) {
         String json = null;
         try {

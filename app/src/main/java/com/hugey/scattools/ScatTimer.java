@@ -18,6 +18,10 @@ public class ScatTimer {
     private int mSecondInterval = 1000;
     private int mTimerDuration = 150;
 
+    public static final int TICKING_PLAY = 1;
+    public static final int TICKING_PAUSE = 2;
+    public static final int TICKING_RESUME = 3;
+
     Runnable mTimerRunnable = new Runnable() {
         @Override
         public void run() {
@@ -33,6 +37,7 @@ public class ScatTimer {
             }
             String displayTime = minutes + ":" + seconds;
             mTimerView.setTimerText(displayTime);
+            mTimerView.setIsTicking(TICKING_PAUSE);
 
             if (time > 0) {
                 mTimerHandler.postDelayed(mTimerRunnable, mSecondInterval);
@@ -47,22 +52,22 @@ public class ScatTimer {
 
     public interface TimerView {
         void setTimerText(String text);
+
+        void setIsTicking(int ticking);
     }
 
     public void postTimerDelay() {
         mTimerHandler.postDelayed(mTimerRunnable, mSecondInterval);
     }
 
-    public void postTimerDelay(int delay) {
-        mTimerHandler.postDelayed(mTimerRunnable, mSecondInterval);
-    }
-
     public void removeTimerCallbacks() {
         mTimerHandler.removeCallbacks(mTimerRunnable);
+        mTimerView.setIsTicking(TICKING_RESUME);
     }
 
     public void resetTimerProgress() {
         mTimerProgress = 0;
+        mTimerView.setIsTicking(TICKING_PLAY);
     }
 
     public void resetTimerProgress(int progress) {

@@ -154,6 +154,17 @@ public class EditableListView extends Fragment implements View.OnClickListener, 
     }
 
     @Override
+    public void setIsTicking(int ticking) {
+        if (ticking == ScatTimer.TICKING_PLAY) {
+            mTvPlay.setText(PLAY);
+        } else if (ticking == ScatTimer.TICKING_PAUSE) {
+            mTvPlay.setText(PAUSE);
+        } else if (ticking == ScatTimer.TICKING_RESUME) {
+            mTvPlay.setText(RESUME);
+        }
+    }
+
+    @Override
     public void setIsRolling(boolean rolling) {
 
     }

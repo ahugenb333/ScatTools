@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private String mDieText;
     private String mTimerText;
+    private int mTickingState = 0;
 
 
     @Override
@@ -101,6 +102,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (!TextUtils.isEmpty(mDieText)) {
             setDieText(mDieText);
         }
+        if (mTickingState != 0) {
+            setIsTicking(mTickingState);
+        }
 
         //todo update buttons for ticking, rolling play/pause
     }
@@ -136,6 +140,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void setTimerText(@NonNull String text) {
         mTimerText = text;
         ((ScatTimer.TimerView) mPagerAdapter.getItem(mViewPager.getCurrentItem())).setTimerText(text);
+    }
+
+    @Override
+    public void setIsTicking(int ticking) {
+        mTickingState = ticking;
+        ((ScatTimer.TimerView) mPagerAdapter.getItem(mViewPager.getCurrentItem())).setIsTicking(ticking);
     }
 
     @Override
@@ -208,6 +218,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mEditableListView.setListener(listener);
         }
     }
-
-
 }
