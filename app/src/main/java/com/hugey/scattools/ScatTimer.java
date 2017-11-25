@@ -18,6 +18,8 @@ public class ScatTimer {
     private int mSecondInterval = 1000;
     private int mTimerDuration = 150;
 
+    private static final String TIMER_TEXT_DEFAULT = "2:30";
+
     public static final int TICKING_PLAY = 1;
     public static final int TICKING_PAUSE = 2;
     public static final int TICKING_RESUME = 3;
@@ -68,6 +70,7 @@ public class ScatTimer {
     public void resetTimerProgress() {
         mTimerProgress = 0;
         mTimerView.setIsTicking(TICKING_PLAY);
+        mTimerView.setTimerText(TIMER_TEXT_DEFAULT);
     }
 
     public void resetTimerProgress(int progress) {

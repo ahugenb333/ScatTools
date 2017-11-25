@@ -11,6 +11,7 @@ import java.util.Random;
 public class ScatDie {
 
     public interface DieView {
+
         void setDieText(String text);
 
         void setIsRolling(boolean rolling);
