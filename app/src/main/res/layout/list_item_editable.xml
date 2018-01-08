@@ -30,8 +30,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/list_item_editable_et"
-        android:hint="Can you see me ????"/>
+        android:id="@+id/list_item_editable_et" />
 
 
 </LinearLayout>

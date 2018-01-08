@@ -1,5 +1,6 @@
 package com.hugey.scattools;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -8,11 +9,15 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.R.drawable;
 //TODO Timer stuff in ScatTimer, Die stuff in ScatDie, fix tapping die bug, BASE ACTIVITY for button/timer view components
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, ScatView.ScatViewListener, ListView.ListViewListener, EditableListView.EditableListViewListener, ScatTimer.TimerView, ScatDie.DieView {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, ScatView.ScatViewListener, ListView.ListViewListener, EditableListView.EditableListViewListener, ScatTimer.TimerView, ScatDie.DieView, MenuItem.OnMenuItemClickListener {
 
 
     public static final String EXTRA_PROGRESS = "progress";
@@ -105,8 +110,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (mTickingState != 0) {
             setIsTicking(mTickingState);
         }
+    }
 
-        //todo update buttons for ticking, rolling play/pause
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem menuItem = menu.findItem(R.id.mn_options);
+        menuItem.setIcon(android.R.drawable.ic_dialog_info);
+        menuItem.setVisible(true);
+        menuItem.setOnMenuItemClickListener(this);
+        return true;
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.scat_menu, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onMenuItemClick(MenuItem menuItem) {
+        startActivityForResult(new Intent(this, SettingsActivity.class), 420);
+        return false;
     }
 
     /** @link ScatView.ScatViewListener **/

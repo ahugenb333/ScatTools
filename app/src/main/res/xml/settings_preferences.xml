@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent">
+
+    <PreferenceCategory
+        android:title="@string/settings_header_die">
+
+        <ListPreference
+            android:key="list_preference_alphabet"
+            android:title="@string/settings_alphabet"
+            android:entries="@array/settings_alphabets"
+            android:entryValues="@array/settings_alphabets"/>
+
+        <SwitchPreference
+            android:key="switch_preference_skip_previous"
+            android:title="@string/settings_skip_previous"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/settings_header_timer">
+
+        <ListPreference
+            android:key="list_preference_timer_duration"
+            android:title="@string/settings_timer_duration"
+            android:entries="@array/settings_duration_times"
+            android:entryValues="@array/settings_duration_times"/>
+
+        <ListPreference
+            android:key="list_preference_expire_sound"
+            android:title="@string/settings_expire_sound"
+            android:entries="@array/settings_expire_sounds"
+            android:entryValues="@array/settings_expire_sounds"/>
+
+        <SwitchPreference
+            android:key="switch_preference_skip_previous"
+            android:title="@string/settings_skip_previous" />
+
+        <Preference
+            android:title="@string/settings_play_tick">
+            <intent android:action="android.intent.action.VIEW"
+                android:data="http://codepath.com/" />
+        </Preference>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

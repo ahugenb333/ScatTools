@@ -49,6 +49,10 @@ public class ScatDie {
         mLetters = letters;
     }
 
+    public void setLetters(String[] letters) {
+        mLetters = letters;
+    }
+
     public void resetCurrentLetter() {
         mCurrentLetter = 0;
     }
