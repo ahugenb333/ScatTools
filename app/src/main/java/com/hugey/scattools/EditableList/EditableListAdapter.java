@@ -1,4 +1,4 @@
-package com.hugey.scattools;
+package com.hugey.scattools.EditableList;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.hugey.scattools.Category.Category;
+import com.hugey.scattools.R;
 
 import java.util.ArrayList;
 import java.util.List;

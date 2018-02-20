@@ -1,4 +1,4 @@
-package com.hugey.scattools;
+package com.hugey.scattools.Scat;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.hugey.scattools.R;
 
 /**
  * Created by ryanhugenberg on 6/13/17.

@@ -1,4 +1,4 @@
-package com.hugey.scattools;
+package com.hugey.scattools.Settings;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
+
+import com.hugey.scattools.R;
 
 /**
  * Created by user on 12/29/17.

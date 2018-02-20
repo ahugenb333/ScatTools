@@ -1,8 +1,7 @@
-package com.hugey.scattools;
+package com.hugey.scattools.Settings;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.text.TextUtils;
 
 /**
  * Created by user on 1/3/18.

@@ -1,10 +1,7 @@
-package com.hugey.scattools;
+package com.hugey.scattools.Category;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.TextView;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

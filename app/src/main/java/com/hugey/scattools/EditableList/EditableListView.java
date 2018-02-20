@@ -1,4 +1,4 @@
-package com.hugey.scattools;
+package com.hugey.scattools.EditableList;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,6 +19,11 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.hugey.scattools.Category.Categories;
+import com.hugey.scattools.Category.Category;
+import com.hugey.scattools.R;
+import com.hugey.scattools.Scat.ScatDie;
+import com.hugey.scattools.Scat.ScatTimer;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,7 +33,7 @@ import java.util.List;
  * Created by ryanhugenberg on 6/13/17.
  */
 
-public class ListView extends Fragment implements View.OnClickListener, ScatDie.DieView, ScatTimer.TimerView, TextWatcher {
+public class EditableListView extends Fragment implements View.OnClickListener, ScatDie.DieView, ScatTimer.TimerView, TextWatcher {
 
     private Button mBtnDie;
     private Button mBtnReset;
@@ -39,11 +44,11 @@ public class ListView extends Fragment implements View.OnClickListener, ScatDie.
 
     private TextView mTvPlay;
 
-    private ListAdapter mAdapter;
+    private EditableListAdapter mAdapter;
     private RecyclerView mList;
     private Categories mCategories;
 
-    private ListViewListener listener;
+    private EditableListViewListener listener;
 
     private static final String PLAY = "Play";
     private static final String PAUSE = "Pause";
@@ -52,18 +57,17 @@ public class ListView extends Fragment implements View.OnClickListener, ScatDie.
     private static final String DIE_DEFAULT = "!";
     private static final String TIMER_DEFAULT = "2:30";
 
-    public interface ListViewListener {
+    public interface EditableListViewListener {
 
         void onDieClicked();
 
         void onPlayClicked();
 
         void onResetClicked();
-
     }
 
 
-    public void setListener(ListViewListener listener) {
+    public void setListener(EditableListViewListener listener) {
         this.listener = listener;
     }
 
@@ -89,7 +93,7 @@ public class ListView extends Fragment implements View.OnClickListener, ScatDie.
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         mList.setLayoutManager(manager);
 
-        mAdapter = new ListAdapter(getContext());
+        mAdapter = new EditableListAdapter(getContext());
 
 
         mList.setAdapter(mAdapter);
@@ -155,6 +159,17 @@ public class ListView extends Fragment implements View.OnClickListener, ScatDie.
     }
 
     @Override
+    public void setIsTicking(int ticking) {
+        if (ticking == ScatTimer.TICKING_PLAY) {
+            mTvPlay.setText(PLAY);
+        } else if (ticking == ScatTimer.TICKING_PAUSE) {
+            mTvPlay.setText(PAUSE);
+        } else if (ticking == ScatTimer.TICKING_RESUME) {
+            mTvPlay.setText(RESUME);
+        }
+    }
+
+    @Override
     public void setIsRolling(boolean rolling) {
 
     }
@@ -188,17 +203,6 @@ public class ListView extends Fragment implements View.OnClickListener, ScatDie.
     @Override
     public void setTimerText(String text) {
         mBtnTimer.setText(text);
-    }
-
-    @Override
-    public void setIsTicking(int ticking) {
-        if (ticking == ScatTimer.TICKING_PLAY) {
-            mTvPlay.setText(PLAY);
-        } else if (ticking == ScatTimer.TICKING_PAUSE) {
-            mTvPlay.setText(PAUSE);
-        } else if (ticking == ScatTimer.TICKING_RESUME) {
-            mTvPlay.setText(RESUME);
-        }
     }
 
     public String loadJSONFromAsset(@NonNull String assetName) {

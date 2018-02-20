@@ -14,7 +14,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.R.drawable;
+
+import com.hugey.scattools.EditableList.EditableListView;
+import com.hugey.scattools.List.ListView;
+import com.hugey.scattools.Scat.ScatDie;
+import com.hugey.scattools.Scat.ScatTimer;
+import com.hugey.scattools.Scat.ScatView;
+import com.hugey.scattools.Settings.SettingsActivity;
 //TODO Timer stuff in ScatTimer, Die stuff in ScatDie, fix tapping die bug, BASE ACTIVITY for button/timer view components
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, ScatView.ScatViewListener, ListView.ListViewListener, EditableListView.EditableListViewListener, ScatTimer.TimerView, ScatDie.DieView, MenuItem.OnMenuItemClickListener {

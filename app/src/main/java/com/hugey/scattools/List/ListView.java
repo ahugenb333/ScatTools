@@ -1,4 +1,4 @@
-package com.hugey.scattools;
+package com.hugey.scattools.List;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,6 +19,11 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.hugey.scattools.Category.Categories;
+import com.hugey.scattools.Category.Category;
+import com.hugey.scattools.R;
+import com.hugey.scattools.Scat.ScatDie;
+import com.hugey.scattools.Scat.ScatTimer;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,7 +33,7 @@ import java.util.List;
  * Created by ryanhugenberg on 6/13/17.
  */
 
-public class EditableListView extends Fragment implements View.OnClickListener, ScatDie.DieView, ScatTimer.TimerView, TextWatcher {
+public class ListView extends Fragment implements View.OnClickListener, ScatDie.DieView, ScatTimer.TimerView, TextWatcher {
 
     private Button mBtnDie;
     private Button mBtnReset;
@@ -39,11 +44,11 @@ public class EditableListView extends Fragment implements View.OnClickListener, 
 
     private TextView mTvPlay;
 
-    private EditableListAdapter mAdapter;
+    private ListAdapter mAdapter;
     private RecyclerView mList;
     private Categories mCategories;
 
-    private EditableListViewListener listener;
+    private ListViewListener listener;
 
     private static final String PLAY = "Play";
     private static final String PAUSE = "Pause";
@@ -52,17 +57,18 @@ public class EditableListView extends Fragment implements View.OnClickListener, 
     private static final String DIE_DEFAULT = "!";
     private static final String TIMER_DEFAULT = "2:30";
 
-    public interface EditableListViewListener {
+    public interface ListViewListener {
 
         void onDieClicked();
 
         void onPlayClicked();
 
         void onResetClicked();
+
     }
 
 
-    public void setListener(EditableListViewListener listener) {
+    public void setListener(ListViewListener listener) {
         this.listener = listener;
     }
 
@@ -88,7 +94,7 @@ public class EditableListView extends Fragment implements View.OnClickListener, 
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         mList.setLayoutManager(manager);
 
-        mAdapter = new EditableListAdapter(getContext());
+        mAdapter = new ListAdapter(getContext());
 
 
         mList.setAdapter(mAdapter);
@@ -154,17 +160,6 @@ public class EditableListView extends Fragment implements View.OnClickListener, 
     }
 
     @Override
-    public void setIsTicking(int ticking) {
-        if (ticking == ScatTimer.TICKING_PLAY) {
-            mTvPlay.setText(PLAY);
-        } else if (ticking == ScatTimer.TICKING_PAUSE) {
-            mTvPlay.setText(PAUSE);
-        } else if (ticking == ScatTimer.TICKING_RESUME) {
-            mTvPlay.setText(RESUME);
-        }
-    }
-
-    @Override
     public void setIsRolling(boolean rolling) {
 
     }
@@ -198,6 +193,17 @@ public class EditableListView extends Fragment implements View.OnClickListener, 
     @Override
     public void setTimerText(String text) {
         mBtnTimer.setText(text);
+    }
+
+    @Override
+    public void setIsTicking(int ticking) {
+        if (ticking == ScatTimer.TICKING_PLAY) {
+            mTvPlay.setText(PLAY);
+        } else if (ticking == ScatTimer.TICKING_PAUSE) {
+            mTvPlay.setText(PAUSE);
+        } else if (ticking == ScatTimer.TICKING_RESUME) {
+            mTvPlay.setText(RESUME);
+        }
     }
 
     public String loadJSONFromAsset(@NonNull String assetName) {

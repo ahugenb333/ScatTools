@@ -1,4 +1,4 @@
-package com.hugey.scattools;
+package com.hugey.scattools.Scat;
 
 import android.os.Handler;
 

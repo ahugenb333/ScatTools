@@ -1,6 +1,5 @@
-package com.hugey.scattools;
+package com.hugey.scattools.Category;
 
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.annotations.Expose;
