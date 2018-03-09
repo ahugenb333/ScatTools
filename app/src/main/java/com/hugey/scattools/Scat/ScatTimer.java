@@ -1,10 +1,6 @@
 package com.hugey.scattools.Scat;
 
 import android.os.Handler;
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import io.reactivex.internal.operators.observable.ObservableInterval;
 
 /**
  * Created by austin on 2/13/17.
@@ -12,13 +8,19 @@ import io.reactivex.internal.operators.observable.ObservableInterval;
 
 public class ScatTimer {
 
+    private static final int TIMER_DURATION_200 = 120;
+    private static final int TIMER_DURATION_230 = 150;
+    private static final int TIMER_DURATION_300 = 180;
+
+    private static final String TIMER_TEXT_200 = "2:00";
+    private static final String TIMER_TEXT_230 = "2:30";
+    private static final String TIMER_TEXT_300 = "3:00";
+
     private TimerView mTimerView;
     private Handler mTimerHandler;
     private int mTimerProgress = 0;
     private int mSecondInterval = 1000;
-    private int mTimerDuration = 150;
-
-    private static final String TIMER_TEXT_DEFAULT = "2:30";
+    private int mTimerDuration = TIMER_DURATION_230;
 
     public static final int TICKING_PLAY = 1;
     public static final int TICKING_PAUSE = 2;
@@ -58,6 +60,10 @@ public class ScatTimer {
         void setIsTicking(int ticking);
     }
 
+    public void setTimerView(TimerView timerView) {
+        mTimerView = timerView;
+    }
+
     public void postTimerDelay() {
         mTimerHandler.postDelayed(mTimerRunnable, mSecondInterval);
     }
@@ -70,18 +76,10 @@ public class ScatTimer {
     public void resetTimerProgress() {
         mTimerProgress = 0;
         mTimerView.setIsTicking(TICKING_PLAY);
-        mTimerView.setTimerText(TIMER_TEXT_DEFAULT);
+        mTimerView.setTimerText(TIMER_TEXT_230);
     }
 
-    public void resetTimerProgress(int progress) {
-        mTimerProgress = progress;
-    }
-
-    public void setTimerView(TimerView timerView) {
-        mTimerView = timerView;
-    }
-
-    public int getTimerProgress() {
-        return mTimerProgress;
+    public void setTimerDuration(int timerDuration) {
+        mTimerDuration = timerDuration;
     }
 }

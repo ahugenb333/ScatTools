@@ -9,12 +9,16 @@ import android.os.Parcelable;
 
 public class Settings implements Parcelable {
 
-    private boolean mAlphabetDefault = true;
-    private boolean mSkipPrevious = true;
-    private String mTimerDuration = "2:30";
+    public static final String TIMER_DURATION_200 = "2:00";
+    public static final String TIMER_DURATION_230 = "2:30";
+    public static final String TIMER_DURATION_300 = "3:00";
 
-    public boolean getAlphabetDefault() {
-        return mAlphabetDefault;
+    private boolean mIsScatAlphabet = true;
+    private boolean mSkipPrevious = true;
+    private String mTimerDuration = TIMER_DURATION_230;
+
+    public boolean isScatAlphabet() {
+        return mIsScatAlphabet;
     }
 
     public boolean getSkipPrevious() {
@@ -26,7 +30,7 @@ public class Settings implements Parcelable {
     }
 
     public void setAlphabetDefault(boolean isDefault) {
-        mAlphabetDefault = isDefault;
+        mIsScatAlphabet = isDefault;
     }
 
     public void setSkipPrevious(boolean skipPrevious) {
@@ -38,7 +42,7 @@ public class Settings implements Parcelable {
     }
 
     public Settings(Parcel in) {
-        mAlphabetDefault = in.readByte() != 0;
+        mIsScatAlphabet = in.readByte() != 0;
         mSkipPrevious = in.readByte() != 0;
         mTimerDuration = in.readString();
     }
@@ -48,9 +52,9 @@ public class Settings implements Parcelable {
 
     }
 
-    //construct from another settings object
+    //copy constructor
     public Settings(Settings set) {
-        setAlphabetDefault(set.getAlphabetDefault());
+        setAlphabetDefault(set.isScatAlphabet());
         setSkipPrevious(set.getSkipPrevious());
         setTimerDuration(set.getTimerDuration());
     }
@@ -62,7 +66,7 @@ public class Settings implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeByte((byte) (mAlphabetDefault ? 1 : 0));
+        parcel.writeByte((byte) (mIsScatAlphabet ? 1 : 0));
         parcel.writeByte((byte) (mSkipPrevious ? 1 : 0));
         parcel.writeString(mTimerDuration);
     }

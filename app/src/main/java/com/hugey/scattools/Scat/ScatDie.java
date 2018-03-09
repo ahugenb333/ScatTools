@@ -36,7 +36,7 @@ public class ScatDie {
                 if (mLetters.length == mCurrentLetter) {
                     mCurrentLetter = 0;
                 }
-                mDieView.setDieText(mLetters[mCurrentLetter]);
+                mDieView.setDieText(getRandomLetter());
             } else {
                 mDieProgress = 0;
                 mDieView.setIsRolling(false);

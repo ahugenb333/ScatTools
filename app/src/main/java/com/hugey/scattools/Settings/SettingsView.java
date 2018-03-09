@@ -19,11 +19,16 @@ import com.hugey.scattools.R;
 
 public class SettingsView extends PreferenceFragment implements Preference.OnPreferenceChangeListener{
 
-    private static final String KEY_SKIP = "switch_preference_skip_previous";
-    private static final String KEY_ALPHABET = "list_preference_alphabet";
-    private static final String KEY_TIMER = "list_preference_timer_duration";
-    private static final String KEY_EXPIRE = "list_preference_expire_sound";
-    private static final String KEY_TICK = "switch_preference_play_tick";
+    public static final String KEY_SKIP = "switch_preference_skip_previous";
+    public static final String KEY_ALPHABET = "list_preference_alphabet";
+    public static final String KEY_TIMER = "list_preference_timer_duration";
+    public static final String KEY_EXPIRE = "list_preference_expire_sound";
+    public static final String KEY_TICK = "switch_preference_play_tick";
+
+    private static final String OFFICAL_ALPHABET = "Official Alphabet";
+    private static final String FULL_ALPHABET = "Full Alphabet";
+
+    private Settings mSettings;
 
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +41,8 @@ public class SettingsView extends PreferenceFragment implements Preference.OnPre
         Preference pTimer = getPreferenceManager().findPreference(KEY_TIMER);
         Preference pExpire = getPreferenceManager().findPreference(KEY_EXPIRE);
         Preference pTick = getPreferenceManager().findPreference(KEY_TICK);
+
+        mSettings = new Settings();
 
 
         if (pAlphabet != null) {
@@ -53,19 +60,28 @@ public class SettingsView extends PreferenceFragment implements Preference.OnPre
         if (pSkip != null) {
             pSkip.setOnPreferenceChangeListener(this);
         }
-
     }
-
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object o) {
         String key = preference.getKey();
 
         if (isListPreference(key)) {
-            //preference.setSummary(o.toString());
+            //preference.setSummary(o.toString()); Done automatically?
+        }
+        if (TextUtils.equals(key, KEY_ALPHABET)) {
+            if (TextUtils.equals(o.toString(), OFFICAL_ALPHABET)) {
+                mSettings.setAlphabetDefault(true);
+            } else if (TextUtils.equals(o.toString(), FULL_ALPHABET)) {
+                mSettings.setAlphabetDefault(false);
+            }
         }
 
         return true;
+    }
+
+    public Settings getSettings() {
+        return mSettings;
     }
 
     private boolean isListPreference(String key) {

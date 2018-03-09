@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,16 +21,9 @@ import com.hugey.scattools.List.ListView;
 import com.hugey.scattools.Scat.ScatDie;
 import com.hugey.scattools.Scat.ScatTimer;
 import com.hugey.scattools.Scat.ScatView;
+import com.hugey.scattools.Settings.Settings;
 import com.hugey.scattools.Settings.SettingsActivity;
-//TODO Timer stuff in ScatTimer, Die stuff in ScatDie, fix tapping die bug, BASE ACTIVITY for button/timer view components
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, ScatView.ScatViewListener, ListView.ListViewListener, EditableListView.EditableListViewListener, ScatTimer.TimerView, ScatDie.DieView, MenuItem.OnMenuItemClickListener {
-
-
-    public static final String EXTRA_PROGRESS = "progress";
-    public static final String EXTRA_TEXT = "text";
-    public static final String EXTRA_DIE = "die";
-
 
     private Button mBtnList;
     private Button mBtnTools;
@@ -39,15 +33,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private boolean mIsRolling = false;
 
     private MyPagerAdapter mPagerAdapter;
-
     private ViewPager mViewPager;
 
     private ScatTimer mTimer;
-
-    private Fragment ScatFragment;
-
-    private String[] mLetters;
-
     private ScatDie mDie;
 
     private String mDieText;
@@ -82,18 +70,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBtnList.setOnClickListener(this);
         mBtnTools.setOnClickListener(this);
         mBtnEditable.setOnClickListener(this);
-//
-//        //bottom menu buttons
-//        mBtnList.setOnClickListener(this);
-//        mBtnTools.setOnClickListener(this);
-//        mBtnEditable.setOnClickListener(this);
-//
-//        mBtnPlay.setOnClickListener(this);
-//        mBtnDie.setOnClickListener(this);
-//        mBtnReset.setOnClickListener(this);
-//
-//        mDie.resetCurrentLetter();
-//        mBtnDie.setText("!");
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 420) {
+            Log.d("AYYE", "WEDIDIT");
+            Settings settings = data.getParcelableExtra(SettingsActivity.EXTRA_SETTINGS);
+
+            if (!settings.isScatAlphabet()) {
+                mDie.postDieDelayed();
+                mDie.setLetters(getResources().getStringArray(R.array.letters_full));
+                mDie.resetCurrentLetter();
+
+            }
+
+        }
     }
 
     @Override
@@ -142,7 +137,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return false;
     }
 
-    /** @link ScatView.ScatViewListener **/
+    /**
+     * @link ScatView.ScatViewListener
+     **/
     @Override
     public void onPlayClicked() {
         if (!mIsTicking) {
@@ -188,6 +185,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void setDieText(@NonNull String text) {
+        Log.d("DIETEXT", text);
         mDieText = text;
         ((ScatDie.DieView) mPagerAdapter.getItem(mViewPager.getCurrentItem())).setDieText(text);
     }
