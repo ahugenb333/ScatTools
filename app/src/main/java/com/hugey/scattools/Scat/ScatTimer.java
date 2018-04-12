@@ -1,6 +1,7 @@
 package com.hugey.scattools.Scat;
 
 import android.os.Handler;
+import android.text.TextUtils;
 
 /**
  * Created by austin on 2/13/17.
@@ -21,6 +22,7 @@ public class ScatTimer {
     private int mTimerProgress = 0;
     private int mSecondInterval = 1000;
     private int mTimerDuration = TIMER_DURATION_230;
+    private String mTimerText = TIMER_TEXT_230;
 
     public static final int TICKING_PLAY = 1;
     public static final int TICKING_PAUSE = 2;
@@ -76,10 +78,17 @@ public class ScatTimer {
     public void resetTimerProgress() {
         mTimerProgress = 0;
         mTimerView.setIsTicking(TICKING_PLAY);
-        mTimerView.setTimerText(TIMER_TEXT_230);
+        mTimerView.setTimerText(mTimerText);
     }
 
-    public void setTimerDuration(int timerDuration) {
-        mTimerDuration = timerDuration;
+    public void setTimerDuration(String timerDuration) {
+        mTimerText = timerDuration;
+        if (TextUtils.equals(timerDuration, TIMER_TEXT_200)) {
+            mTimerDuration = TIMER_DURATION_200;
+        } else if (TextUtils.equals(timerDuration, TIMER_TEXT_230)) {
+            mTimerDuration = TIMER_DURATION_230;
+        } else if (TextUtils.equals(timerDuration, TIMER_TEXT_300)) {
+            mTimerDuration = TIMER_DURATION_300;
+        }
     }
 }

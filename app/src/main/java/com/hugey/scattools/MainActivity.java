@@ -105,17 +105,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (!mSettings.equals(settings)) {
                 //see if we need to switch the alphabet on the ScatDie
                 if (mSettings.isScatAlphabet() && !settings.isScatAlphabet()) {
-                    mDie.postDieDelayed();
+                    mDie.removeDieCallbacks();
                     mDie.setLetters(getResources().getStringArray(R.array.letters_full));
                     mDie.resetCurrentLetter();
                 } else if (!mSettings.isScatAlphabet() && settings.isScatAlphabet()) {
-                    mDie.postDieDelayed();
+                    mDie.removeDieCallbacks();
                     mDie.setLetters(getResources().getStringArray(R.array.letters));
                     mDie.resetCurrentLetter();
                 }
                 //see if we need to skip the previous letter or not
                 if (mSettings.getSkipPrevious() != settings.getSkipPrevious()) {
                     mDie.setSkipPrevious(settings.getSkipPrevious());
+                }
+                //see if the timer duration has changed
+                if (!TextUtils.equals(mSettings.getTimerDuration(), settings.getTimerDuration())) {
+                    mTimer.removeTimerCallbacks();
+                    mTimer.setTimerDuration(settings.getTimerDuration());
+                    mTimer.resetTimerProgress();
                 }
 
 

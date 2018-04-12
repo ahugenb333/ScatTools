@@ -80,6 +80,11 @@ public class ScatDie {
         mDieHandler.postDelayed(mDieRunnable, mDieInterval);
     }
 
+    public void removeDieCallbacks() {
+        mDieHandler.removeCallbacks(mDieRunnable);
+        mDieView.setIsRolling(false);
+    }
+
     public String getRandomLetter() {
         if (mSkipPrevious) {
             return getRandom(mLetters);
