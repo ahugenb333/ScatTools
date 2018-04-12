@@ -1,6 +1,7 @@
 package com.hugey.scattools.Scat;
 
 import android.os.Handler;
+import android.text.TextUtils;
 
 import java.util.Random;
 
@@ -25,6 +26,9 @@ public class ScatDie {
     private int mCurrentLetter;
     private String[] mLetters;
 
+    private boolean mSkipPrevious = false;
+    private String mPrevious = "";
+
 
     Runnable mDieRunnable = new Runnable() {
         @Override
@@ -36,7 +40,8 @@ public class ScatDie {
                 if (mLetters.length == mCurrentLetter) {
                     mCurrentLetter = 0;
                 }
-                mDieView.setDieText(getRandomLetter());
+                mPrevious = getRandomLetter();
+                mDieView.setDieText(mPrevious);
             } else {
                 mDieProgress = 0;
                 mDieView.setIsRolling(false);
@@ -57,9 +62,18 @@ public class ScatDie {
         mCurrentLetter = 0;
     }
 
-    public static String getRandom(String[] array) {
+    private static String getRandom(String[] array) {
         int rnd = new Random().nextInt(array.length);
         return array[rnd];
+    }
+
+    private static String getNewRandom(String[] array, String previous) {
+        int rnd = new Random().nextInt(array.length);
+        if (!TextUtils.equals(array[rnd], previous)) {
+            return array[rnd];
+        } else {
+            return getNewRandom(array, previous);
+        }
     }
 
     public void postDieDelayed() {
@@ -67,6 +81,15 @@ public class ScatDie {
     }
 
     public String getRandomLetter() {
-        return getRandom(mLetters);
+        if (mSkipPrevious) {
+            return getRandom(mLetters);
+        }
+        else {
+            return getNewRandom(mLetters, mPrevious);
+        }
+    }
+
+    public void setSkipPrevious(boolean skipPrevious) {
+        mSkipPrevious = skipPrevious;
     }
 }

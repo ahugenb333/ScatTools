@@ -10,7 +10,8 @@ import android.view.MenuItem;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    public static final String EXTRA_SETTINGS = "Settings";
+    public static final String EXTRA_SETTINGS_IN = "settings_in";
+    public static final String EXTRA_SETTINGS_OUT = "settings_out";
 
     private SettingsView mSettingsView;
 
@@ -19,6 +20,12 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         mSettingsView = new SettingsView();
+
+        Settings settings = getIntent().getParcelableExtra(EXTRA_SETTINGS_IN);
+
+        if (settings != null) {
+            mSettingsView.setSettings(settings);
+        }
 
         getFragmentManager().beginTransaction().replace(android.R.id.content, mSettingsView).commit();
         setupActionBar();
@@ -29,7 +36,7 @@ public class SettingsActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 Intent intent = new Intent();
-                intent.putExtra(EXTRA_SETTINGS, mSettingsView.getSettings());
+                intent.putExtra(EXTRA_SETTINGS_OUT, mSettingsView.getSettings());
                 setResult(RESULT_OK, intent);
                 onBackPressed();
                 return true;

@@ -2,6 +2,9 @@ package com.hugey.scattools.Settings;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
+
+import java.util.Objects;
 
 /**
  * Created by user on 1/3/18.
@@ -14,7 +17,7 @@ public class Settings implements Parcelable {
     public static final String TIMER_DURATION_300 = "3:00";
 
     private boolean mIsScatAlphabet = true;
-    private boolean mSkipPrevious = true;
+    private boolean mSkipPrevious = false;
     private String mTimerDuration = TIMER_DURATION_230;
 
     public boolean isScatAlphabet() {
@@ -27,6 +30,18 @@ public class Settings implements Parcelable {
 
     public String getTimerDuration() {
         return mTimerDuration;
+    }
+
+    public boolean isTimerDuration200() {
+        return TextUtils.equals(mTimerDuration, TIMER_DURATION_200);
+    }
+
+    public boolean isTimerDuration230() {
+        return TextUtils.equals(mTimerDuration, TIMER_DURATION_230);
+    }
+
+    public boolean isTimerDuration300() {
+        return TextUtils.equals(mTimerDuration, TIMER_DURATION_300);
     }
 
     public void setAlphabetDefault(boolean isDefault) {
@@ -57,6 +72,16 @@ public class Settings implements Parcelable {
         setAlphabetDefault(set.isScatAlphabet());
         setSkipPrevious(set.getSkipPrevious());
         setTimerDuration(set.getTimerDuration());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Settings settings = (Settings) o;
+        return mIsScatAlphabet == settings.mIsScatAlphabet &&
+                mSkipPrevious == settings.mSkipPrevious &&
+                TextUtils.equals(mTimerDuration, settings.mTimerDuration);
     }
 
     @Override

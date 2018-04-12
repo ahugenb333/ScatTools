@@ -1,7 +1,9 @@
 package com.hugey.scattools;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -23,6 +25,8 @@ import com.hugey.scattools.Scat.ScatTimer;
 import com.hugey.scattools.Scat.ScatView;
 import com.hugey.scattools.Settings.Settings;
 import com.hugey.scattools.Settings.SettingsActivity;
+import com.hugey.scattools.Settings.SettingsView;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, ScatView.ScatViewListener, ListView.ListViewListener, EditableListView.EditableListViewListener, ScatTimer.TimerView, ScatDie.DieView, MenuItem.OnMenuItemClickListener {
 
     private Button mBtnList;
@@ -41,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String mDieText;
     private String mTimerText;
     private int mTickingState = 0;
+    //local Settings copy for applying changes
+    private Settings mSettings;
 
 
     @Override
@@ -51,6 +57,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mTimer = new ScatTimer(this);
         mTimer.setTimerView(this);
         mDie = new ScatDie(this, getResources().getStringArray(R.array.letters));
+
+        //reset settings each time you restart the app
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.remove(SettingsView.KEY_ALPHABET);
+        editor.remove(SettingsView.KEY_EXPIRE);
+        editor.remove(SettingsView.KEY_SKIP);
+        editor.remove(SettingsView.KEY_TIMER);
+        editor.remove(SettingsView.KEY_TICK);
+        editor.apply();
+
+        PreferenceManager.setDefaultValues(this, R.xml.settings_preferences, true);
+
+        mSettings = new Settings();
 
         mViewPager = (ViewPager) findViewById(R.id.main_view_pager);
 
@@ -79,13 +99,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (requestCode == 420) {
             Log.d("AYYE", "WEDIDIT");
-            Settings settings = data.getParcelableExtra(SettingsActivity.EXTRA_SETTINGS);
+            Settings settings = data.getParcelableExtra(SettingsActivity.EXTRA_SETTINGS_OUT);
 
-            if (!settings.isScatAlphabet()) {
-                mDie.postDieDelayed();
-                mDie.setLetters(getResources().getStringArray(R.array.letters_full));
-                mDie.resetCurrentLetter();
+            //settings have changed, need to apply changes
+            if (!mSettings.equals(settings)) {
+                //see if we need to switch the alphabet on the ScatDie
+                if (mSettings.isScatAlphabet() && !settings.isScatAlphabet()) {
+                    mDie.postDieDelayed();
+                    mDie.setLetters(getResources().getStringArray(R.array.letters_full));
+                    mDie.resetCurrentLetter();
+                } else if (!mSettings.isScatAlphabet() && settings.isScatAlphabet()) {
+                    mDie.postDieDelayed();
+                    mDie.setLetters(getResources().getStringArray(R.array.letters));
+                    mDie.resetCurrentLetter();
+                }
+                //see if we need to skip the previous letter or not
+                if (mSettings.getSkipPrevious() != settings.getSkipPrevious()) {
+                    mDie.setSkipPrevious(settings.getSkipPrevious());
+                }
 
+
+                //update our new settings value
+                mSettings = settings;
             }
 
         }
@@ -133,7 +168,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onMenuItemClick(MenuItem menuItem) {
-        startActivityForResult(new Intent(this, SettingsActivity.class), 420);
+        Intent settingsIntent = new Intent(this, SettingsActivity.class);
+        settingsIntent.putExtra(SettingsActivity.EXTRA_SETTINGS_IN, mSettings);
+
+        startActivityForResult(settingsIntent, 420);
         return false;
     }
 
