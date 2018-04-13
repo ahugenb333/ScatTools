@@ -39,7 +39,6 @@ public class SettingsView extends PreferenceFragment implements Preference.OnPre
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.settings_preferences);
 
         pAlphabet = (ListPreference) getPreferenceManager().findPreference(KEY_ALPHABET);

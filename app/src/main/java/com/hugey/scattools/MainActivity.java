@@ -97,8 +97,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 420) {
-            Log.d("AYYE", "WEDIDIT");
+        if (requestCode == SettingsActivity.REQUEST_CODE) {
             Settings settings = data.getParcelableExtra(SettingsActivity.EXTRA_SETTINGS_OUT);
 
             //settings have changed, need to apply changes
@@ -174,10 +173,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onMenuItemClick(MenuItem menuItem) {
-        Intent settingsIntent = new Intent(this, SettingsActivity.class);
-        settingsIntent.putExtra(SettingsActivity.EXTRA_SETTINGS_IN, mSettings);
+        Intent settingsIntent = SettingsActivity.getLaunchIntent(this, mSettings);
 
-        startActivityForResult(settingsIntent, 420);
+
+        startActivityForResult(settingsIntent, SettingsActivity.REQUEST_CODE);
         return false;
     }
 

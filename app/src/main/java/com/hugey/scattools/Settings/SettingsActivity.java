@@ -1,5 +1,6 @@
 package com.hugey.scattools.Settings;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -10,8 +11,16 @@ import android.view.MenuItem;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    public static final int REQUEST_CODE = 421;
+
     public static final String EXTRA_SETTINGS_IN = "settings_in";
     public static final String EXTRA_SETTINGS_OUT = "settings_out";
+
+    public static Intent getLaunchIntent(Context context, Settings settings) {
+        Intent intent = new Intent(context, SettingsActivity.class);
+        intent.putExtra(EXTRA_SETTINGS_IN, settings);
+        return intent;
+    }
 
     private SettingsView mSettingsView;
 
