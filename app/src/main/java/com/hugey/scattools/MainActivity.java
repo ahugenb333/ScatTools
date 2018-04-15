@@ -121,6 +121,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     mTimer.removeTimerCallbacks();
                     mTimer.setTimerDuration(settings.getTimerDuration());
                     mTimer.resetTimerProgress();
+
+                    mIsTicking = false;
                 }
 
 
