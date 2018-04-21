@@ -41,10 +41,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ScatTimer mTimer;
     private ScatDie mDie;
 
-    //todo: remove? onSaveInstanceState?
-    private String mDieText;
-    private String mTimerText = Settings.TIMER_DURATION_230;
-    private int mTickingState = 0;
     //local Settings copy for applying changes
     private Settings mSettings;
 
@@ -216,7 +212,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void setTimerText(@NonNull String text) {
-        mTimerText = text;
         ((ScatTimer.TimerView) mPagerAdapter.getItem(0)).setTimerText(text);
         ((ScatTimer.TimerView) mPagerAdapter.getItem(1)).setTimerText(text);
         ((ScatTimer.TimerView) mPagerAdapter.getItem(2)).setTimerText(text);
@@ -224,7 +219,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void setIsTicking(int ticking) {
-        mTickingState = ticking;
         ((ScatTimer.TimerView) mPagerAdapter.getItem(0)).setIsTicking(ticking);
         ((ScatTimer.TimerView) mPagerAdapter.getItem(1)).setIsTicking(ticking);
         ((ScatTimer.TimerView) mPagerAdapter.getItem(2)).setIsTicking(ticking);
@@ -238,7 +232,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void setDieText(@NonNull String text) {
         Log.d("DIETEXT", text);
-        mDieText = text;
         ((ScatDie.DieView) mPagerAdapter.getItem(0)).setDieText(text);
         ((ScatDie.DieView) mPagerAdapter.getItem(1)).setDieText(text);
         ((ScatDie.DieView) mPagerAdapter.getItem(2)).setDieText(text);
