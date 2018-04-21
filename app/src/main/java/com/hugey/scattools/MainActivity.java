@@ -41,11 +41,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ScatTimer mTimer;
     private ScatDie mDie;
 
+    //todo: remove? onSaveInstanceState?
     private String mDieText;
     private String mTimerText = Settings.TIMER_DURATION_230;
     private int mTickingState = 0;
     //local Settings copy for applying changes
     private Settings mSettings;
+
+    private static final String DIE_DEFAULT = "!";
 
 
     @Override
@@ -66,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editor.remove(SettingsView.KEY_TIMER);
         editor.remove(SettingsView.KEY_TICK);
         editor.apply();
+
 
         PreferenceManager.setDefaultValues(this, R.xml.settings_preferences, true);
 
@@ -194,6 +198,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mTimer.removeTimerCallbacks();
         mTimer.resetTimerProgress();
 
+        setDieText(DIE_DEFAULT);
+
         mIsTicking = false;
     }
 
@@ -218,7 +224,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mTickingState = ticking;
         ((ScatTimer.TimerView) mPagerAdapter.getItem(0)).setIsTicking(ticking);
         ((ScatTimer.TimerView) mPagerAdapter.getItem(1)).setIsTicking(ticking);
-        //((ScatTimer.TimerView) mPagerAdapter.getItem(2)).setIsTicking(ticking);
+        ((ScatTimer.TimerView) mPagerAdapter.getItem(2)).setIsTicking(ticking);
     }
 
     @Override

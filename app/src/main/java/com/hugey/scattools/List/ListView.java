@@ -77,34 +77,30 @@ public class ListView extends Fragment implements View.OnClickListener, ScatDie.
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.view_list, container, false);
 
-
         mBtnDie = (Button) v.findViewById(R.id.list_btn_die);
         mBtnReset = (Button) v.findViewById(R.id.list_btn_reset);
         mBtnTimer = (Button) v.findViewById(R.id.list_btn_timer);
-
         mEtListId = (EditText) v.findViewById(R.id.list_et_id);
         mBtnRandomize = (Button) v.findViewById(R.id.list_btn_randomize);
+        mTvPlay = (TextView) v.findViewById(R.id.list_tv_play);
+        mList = (RecyclerView) v.findViewById(R.id.list_recycler);
+
+        mTvPlay.setText(PLAY);
+        mBtnTimer.setText(TIMER_DEFAULT);
+        mBtnDie.setText(DIE_DEFAULT);
 
         mEtListId.addTextChangedListener(this);
-
-        mTvPlay = (TextView) v.findViewById(R.id.list_tv_play);
-
-        mList = (RecyclerView) v.findViewById(R.id.list_recycler);
 
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         mList.setLayoutManager(manager);
 
         mAdapter = new ListAdapter(getContext());
-
-
         mList.setAdapter(mAdapter);
 
         Gson gson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
-
         mCategories = gson.fromJson(loadJSONFromAsset("category.json"), Categories.class);
 
         mAdapter.setCategories(mCategories.getListByID(1));
-
         mAdapter.notifyDataSetChanged();
 
         return v;
@@ -113,10 +109,6 @@ public class ListView extends Fragment implements View.OnClickListener, ScatDie.
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        mTvPlay.setText(PLAY);
-        mBtnTimer.setText(TIMER_DEFAULT);
-        mBtnDie.setText(DIE_DEFAULT);
 
         mBtnTimer.setOnClickListener(this);
         mBtnDie.setOnClickListener(this);

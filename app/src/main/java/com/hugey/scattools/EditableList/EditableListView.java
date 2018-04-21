@@ -59,6 +59,9 @@ public class EditableListView extends Fragment implements View.OnClickListener, 
 
     private String mTimerText = TIMER_DEFAULT;
 
+    private String mPlayText = PLAY;
+    private String mDieText = DIE_DEFAULT;
+
     public interface EditableListViewListener {
 
         void onDieClicked();
@@ -82,32 +85,26 @@ public class EditableListView extends Fragment implements View.OnClickListener, 
         mBtnDie = (Button) v.findViewById(R.id.list_btn_die);
         mBtnReset = (Button) v.findViewById(R.id.list_btn_reset);
         mBtnTimer = (Button) v.findViewById(R.id.list_btn_timer);
-
-        mBtnTimer.setText(mTimerText);
-
         mEtListId = (EditText) v.findViewById(R.id.list_et_id);
         mBtnRandomize = (Button) v.findViewById(R.id.list_btn_randomize);
+        mTvPlay = (TextView) v.findViewById(R.id.list_tv_play);
+        mList = (RecyclerView) v.findViewById(R.id.list_recycler);
+
+        mBtnTimer.setText(mTimerText);
+        mBtnDie.setText(mDieText);
+        mTvPlay.setText(mPlayText);
 
         mEtListId.addTextChangedListener(this);
-
-        mTvPlay = (TextView) v.findViewById(R.id.list_tv_play);
-
-        mList = (RecyclerView) v.findViewById(R.id.list_recycler);
 
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         mList.setLayoutManager(manager);
 
         mAdapter = new EditableListAdapter(getContext());
-
-
         mList.setAdapter(mAdapter);
 
         Gson gson = (new GsonBuilder()).excludeFieldsWithoutExposeAnnotation().create();
-
         mCategories = gson.fromJson(loadJSONFromAsset("category.json"), Categories.class);
-
         mAdapter.setCategories(mCategories.getListByID(1));
-
         mAdapter.notifyDataSetChanged();
 
         return v;
@@ -116,9 +113,6 @@ public class EditableListView extends Fragment implements View.OnClickListener, 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        mTvPlay.setText(PLAY);
-        mBtnDie.setText(DIE_DEFAULT);
 
         mBtnTimer.setOnClickListener(this);
         mBtnDie.setOnClickListener(this);
@@ -158,17 +152,23 @@ public class EditableListView extends Fragment implements View.OnClickListener, 
 
     @Override
     public void setDieText(String text) {
-        mBtnDie.setText(text);
+        mDieText = text;
+        if (mBtnDie != null) {
+            mBtnDie.setText(mDieText);
+        }
     }
 
     @Override
     public void setIsTicking(int ticking) {
         if (ticking == ScatTimer.TICKING_PLAY) {
-            mTvPlay.setText(PLAY);
+            mPlayText = PLAY;
         } else if (ticking == ScatTimer.TICKING_PAUSE) {
-            mTvPlay.setText(PAUSE);
+            mPlayText = PAUSE;
         } else if (ticking == ScatTimer.TICKING_RESUME) {
-            mTvPlay.setText(RESUME);
+            mPlayText = RESUME;
+        }
+        if (mTvPlay != null) {
+            mTvPlay.setText(mPlayText);
         }
     }
 

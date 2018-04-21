@@ -17,8 +17,6 @@ import com.hugey.scattools.R;
  */
 
 public class ScatView extends Fragment implements ScatTimer.TimerView, ScatDie.DieView, View.OnClickListener {
-    
-    private int pos;
 
     private Button mBtnDie;
     private Button mBtnPlay;
@@ -31,10 +29,12 @@ public class ScatView extends Fragment implements ScatTimer.TimerView, ScatDie.D
     private static final String DIE_DEFAULT = "!";
     private static final String TIMER_DEFAULT = "2:30";
 
-
     private TextView mTvTimer;
 
     private ScatViewListener listener;
+
+    private String mTimerText = TIMER_DEFAULT;
+    private String mDieText = DIE_DEFAULT;
 
     public void setListener(ScatViewListener listener) {
         this.listener = listener;
@@ -42,14 +42,19 @@ public class ScatView extends Fragment implements ScatTimer.TimerView, ScatDie.D
 
     @Override
     public void setTimerText(String text) {
+        mTimerText = text;
         if (mTvTimer != null) {
-            mTvTimer.setText(text);
+            mTvTimer.setText(mTimerText);
         }
     }
 
     @Override
     public void setDieText(String text) {
-        mBtnDie.setText(text);
+        mDieText = text;
+        if (mBtnDie != null) {
+            mBtnDie.setText(mDieText);
+        }
+
     }
 
     @Override
@@ -78,15 +83,15 @@ public class ScatView extends Fragment implements ScatTimer.TimerView, ScatDie.D
         mBtnReset = (Button) v.findViewById(R.id.btn_reset);
         mTvTimer = (TextView) v.findViewById(R.id.tv_timer);
 
+        mTvTimer.setText(mTimerText);
+        mBtnDie.setText(mDieText);
+
         return v;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        mTvTimer.setText(TIMER_DEFAULT);
-        mBtnDie.setText(DIE_DEFAULT);
 
         mBtnDie.setOnClickListener(this);
         mBtnPlay.setOnClickListener(this);
