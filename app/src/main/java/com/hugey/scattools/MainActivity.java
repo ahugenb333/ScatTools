@@ -195,6 +195,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mTimer.removeTimerCallbacks();
         mTimer.resetTimerProgress();
 
+        mDie.removeDieCallbacks();
+
         setIsTicking(ScatTimer.TICKING_PLAY);
 
         setDieText(DIE_DEFAULT);
