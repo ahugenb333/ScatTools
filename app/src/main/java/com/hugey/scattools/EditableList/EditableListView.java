@@ -81,7 +81,6 @@ public class EditableListView extends Fragment implements View.OnClickListener, 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.view_list, container, false);
 
-
         mBtnDie = (Button) v.findViewById(R.id.list_btn_die);
         mBtnReset = (Button) v.findViewById(R.id.list_btn_reset);
         mBtnTimer = (Button) v.findViewById(R.id.list_btn_timer);
@@ -123,26 +122,25 @@ public class EditableListView extends Fragment implements View.OnClickListener, 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.list_btn_timer) {
-
-            String s = mTvPlay.getText().toString();
-            if (s.equals(PLAY)) {
+            if (mPlayText.equals(PLAY)) {
                 mTvPlay.setText(PAUSE);
-                Log.d("Pressed play: ", s);
-            } else if (s.equals(PAUSE)) {
+                Log.d("Pressed play: ", mPlayText);
+            } else if (mPlayText.equals(PAUSE)) {
                 mTvPlay.setText(RESUME);
-                Log.d("Pressed pause: ", s);
-            } else if (s.equals(RESUME)) {
+                Log.d("Pressed pause: ", mPlayText);
+            } else if (mPlayText.equals(RESUME)) {
                 mTvPlay.setText(PAUSE);
-                Log.d("Pressed resume: ", s);
+                Log.d("Pressed resume: ", mPlayText);
             }
-
+            mPlayText = mTvPlay.getText().toString();
             listener.onPlayClicked();
         } else if (v.getId() == R.id.list_btn_die) {
             listener.onDieClicked();
         } else if (v.getId() == R.id.list_btn_reset) {
             mBtnTimer.setText(TIMER_DEFAULT);
-            mTvPlay.setText(PLAY);
             mBtnDie.setText(DIE_DEFAULT);
+            mPlayText = PLAY;
+            mTvPlay.setText(mPlayText);
             listener.onResetClicked();
         } else if (v.getId() == R.id.list_btn_randomize) {
             mAdapter.setCategories(mCategories.getRandomizedCategories());

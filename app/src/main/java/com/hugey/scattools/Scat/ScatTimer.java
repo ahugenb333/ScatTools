@@ -72,12 +72,10 @@ public class ScatTimer {
 
     public void removeTimerCallbacks() {
         mTimerHandler.removeCallbacks(mTimerRunnable);
-        mTimerView.setIsTicking(TICKING_RESUME);
     }
 
     public void resetTimerProgress() {
         mTimerProgress = 0;
-        mTimerView.setIsTicking(TICKING_PLAY);
         mTimerView.setTimerText(mTimerText);
     }
 

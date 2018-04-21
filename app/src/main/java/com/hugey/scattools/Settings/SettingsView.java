@@ -96,7 +96,6 @@ public class SettingsView extends PreferenceFragment implements Preference.OnPre
     public boolean onPreferenceChange(Preference preference, Object o) {
         String key = preference.getKey();
 
-
         if (TextUtils.equals(key, KEY_ALPHABET)) {
             if (TextUtils.equals(o.toString(), OFFICAL_ALPHABET)) {
                 mSettings.setAlphabetDefault(true);
@@ -112,7 +111,6 @@ public class SettingsView extends PreferenceFragment implements Preference.OnPre
         } else if (TextUtils.equals(key, KEY_TIMER)) {
             mSettings.setTimerDuration(o.toString());
         }
-
         return true;
     }
 

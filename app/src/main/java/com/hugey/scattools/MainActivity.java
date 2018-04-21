@@ -127,11 +127,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     mTimer.setTimerDuration(settings.getTimerDuration());
                     mTimer.resetTimerProgress();
 
-
+                    setIsTicking(ScatTimer.TICKING_PLAY);
 
                     mIsTicking = false;
                 }
-
 
                 //update our new settings value
                 mSettings = settings;
@@ -187,8 +186,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onPlayClicked() {
         if (!mIsTicking) {
             mTimer.postTimerDelay();
+            setIsTicking(ScatTimer.TICKING_PAUSE);
         } else {
             mTimer.removeTimerCallbacks();
+            setIsTicking(ScatTimer.TICKING_RESUME);
         }
         mIsTicking = !mIsTicking;
     }
@@ -197,6 +198,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onResetClicked() {
         mTimer.removeTimerCallbacks();
         mTimer.resetTimerProgress();
+
+        setIsTicking(ScatTimer.TICKING_PLAY);
 
         setDieText(DIE_DEFAULT);
 

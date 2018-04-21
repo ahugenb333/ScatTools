@@ -57,6 +57,8 @@ public class ListView extends Fragment implements View.OnClickListener, ScatDie.
     private static final String DIE_DEFAULT = "!";
     private static final String TIMER_DEFAULT = "2:30";
 
+    private String mPlayText = PLAY;
+
     public interface ListViewListener {
 
         void onDieClicked();
@@ -85,7 +87,7 @@ public class ListView extends Fragment implements View.OnClickListener, ScatDie.
         mTvPlay = (TextView) v.findViewById(R.id.list_tv_play);
         mList = (RecyclerView) v.findViewById(R.id.list_recycler);
 
-        mTvPlay.setText(PLAY);
+        mTvPlay.setText(mPlayText);
         mBtnTimer.setText(TIMER_DEFAULT);
         mBtnDie.setText(DIE_DEFAULT);
 
@@ -120,23 +122,25 @@ public class ListView extends Fragment implements View.OnClickListener, ScatDie.
     public void onClick(View v) {
         if (v.getId() == R.id.list_btn_timer) {
 
-            String s = mTvPlay.getText().toString();
-            if (s.equals(PLAY)) {
+            if (mPlayText.equals(PLAY)) {
                 mTvPlay.setText(PAUSE);
-                Log.d("Pressed play: ", s);
-            } else if (s.equals(PAUSE)) {
+                Log.d("Pressed play: ", mPlayText);
+            } else if (mPlayText.equals(PAUSE)) {
                 mTvPlay.setText(RESUME);
-                Log.d("Pressed pause: ", s);
-            } else if (s.equals(RESUME)) {
+                Log.d("Pressed pause: ", mPlayText);
+            } else if (mPlayText.equals(RESUME)) {
                 mTvPlay.setText(PAUSE);
-                Log.d("Pressed resume: ", s);
+                Log.d("Pressed resume: ", mPlayText);
             }
+
+            mPlayText = mTvPlay.getText().toString();
 
             listener.onPlayClicked();
         } else if (v.getId() == R.id.list_btn_die) {
             listener.onDieClicked();
         } else if (v.getId() == R.id.list_btn_reset) {
             mBtnTimer.setText(TIMER_DEFAULT);
+            mPlayText = PLAY;
             mTvPlay.setText(PLAY);
             mBtnDie.setText(DIE_DEFAULT);
             listener.onResetClicked();
@@ -190,11 +194,14 @@ public class ListView extends Fragment implements View.OnClickListener, ScatDie.
     @Override
     public void setIsTicking(int ticking) {
         if (ticking == ScatTimer.TICKING_PLAY) {
-            mTvPlay.setText(PLAY);
+            mPlayText = PLAY;
         } else if (ticking == ScatTimer.TICKING_PAUSE) {
-            mTvPlay.setText(PAUSE);
+            mPlayText = PAUSE;
         } else if (ticking == ScatTimer.TICKING_RESUME) {
-            mTvPlay.setText(RESUME);
+            mPlayText = RESUME;
+        }
+        if (mTvPlay != null) {
+            mTvPlay.setText(mPlayText);
         }
     }
 

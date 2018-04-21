@@ -36,6 +36,8 @@ public class ScatView extends Fragment implements ScatTimer.TimerView, ScatDie.D
     private String mTimerText = TIMER_DEFAULT;
     private String mDieText = DIE_DEFAULT;
 
+    private String mPlayText = PLAY;
+
     public void setListener(ScatViewListener listener) {
         this.listener = listener;
     }
@@ -60,11 +62,14 @@ public class ScatView extends Fragment implements ScatTimer.TimerView, ScatDie.D
     @Override
     public void setIsTicking(int ticking) {
         if (ticking == ScatTimer.TICKING_PLAY) {
-            mBtnPlay.setText(PLAY);
+            mPlayText = PLAY;
         } else if (ticking == ScatTimer.TICKING_PAUSE) {
-            mBtnPlay.setText(PAUSE);
+            mPlayText = PAUSE;
         } else if (ticking == ScatTimer.TICKING_RESUME) {
-            mBtnPlay.setText(RESUME);
+            mPlayText = RESUME;
+        }
+        if (mBtnPlay != null) {
+            mBtnPlay.setText(mPlayText);
         }
     }
 
@@ -82,6 +87,8 @@ public class ScatView extends Fragment implements ScatTimer.TimerView, ScatDie.D
         mBtnPlay = (Button) v.findViewById(R.id.btn_play);
         mBtnReset = (Button) v.findViewById(R.id.btn_reset);
         mTvTimer = (TextView) v.findViewById(R.id.tv_timer);
+
+        mBtnPlay.setText(mPlayText);
 
         mTvTimer.setText(mTimerText);
         mBtnDie.setText(mDieText);
@@ -101,26 +108,25 @@ public class ScatView extends Fragment implements ScatTimer.TimerView, ScatDie.D
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_play) {
-
-            String s = mBtnPlay.getText().toString();
-            if (s.equals(PLAY)) {
+            if (mPlayText.equals(PLAY)) {
                 mBtnPlay.setText(PAUSE);
-                Log.d("Pressed play: ", s);
-            } else if (s.equals(PAUSE)) {
+                Log.d("Pressed play: ", mPlayText);
+            } else if (mPlayText.equals(PAUSE)) {
                 mBtnPlay.setText(RESUME);
-                Log.d("Pressed pause: ", s);
-            } else if (s.equals(RESUME)) {
+                Log.d("Pressed pause: ", mPlayText);
+            } else if (mPlayText.equals(RESUME)) {
                 mBtnPlay.setText(PAUSE);
-                Log.d("Pressed resume: ", s);
+                Log.d("Pressed resume: ", mPlayText);
             }
-
+            mPlayText = mBtnPlay.getText().toString();
             listener.onPlayClicked();
         } else if (v.getId() == R.id.btn_die) {
             listener.onDieClicked();
         } else if (v.getId() == R.id.btn_reset) {
             mTvTimer.setText(TIMER_DEFAULT);
-            mBtnPlay.setText(PLAY);
             mBtnDie.setText(DIE_DEFAULT);
+            mPlayText = PLAY;
+            mBtnPlay.setText(mPlayText);
             listener.onResetClicked();
         }
     }
