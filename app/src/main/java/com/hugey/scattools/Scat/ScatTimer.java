@@ -85,10 +85,15 @@ public class ScatTimer {
         mTimerText = timerDuration;
         if (TextUtils.equals(timerDuration, TIMER_TEXT_200)) {
             mTimerDuration = TIMER_DURATION_200;
+            mTimerView.setTimerText(TIMER_TEXT_200);
         } else if (TextUtils.equals(timerDuration, TIMER_TEXT_230)) {
             mTimerDuration = TIMER_DURATION_230;
+            mTimerView.setTimerText(TIMER_TEXT_230);
         } else if (TextUtils.equals(timerDuration, TIMER_TEXT_300)) {
             mTimerDuration = TIMER_DURATION_300;
+            mTimerView.setTimerText(TIMER_TEXT_300);
         }
+
+
     }
 }

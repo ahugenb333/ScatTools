@@ -24,7 +24,6 @@ import com.hugey.scattools.Scat.ScatDie;
 import com.hugey.scattools.Scat.ScatTimer;
 import com.hugey.scattools.Scat.ScatView;
 import com.hugey.scattools.Settings.Settings;
-import com.hugey.scattools.Settings.SettingsActivity;
 import com.hugey.scattools.Settings.SettingsView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, ScatView.ScatViewListener, ListView.ListViewListener, EditableListView.EditableListViewListener, ScatTimer.TimerView, ScatDie.DieView, MenuItem.OnMenuItemClickListener {
@@ -43,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ScatDie mDie;
 
     private String mDieText;
-    private String mTimerText;
+    private String mTimerText = Settings.TIMER_DURATION_230;
     private int mTickingState = 0;
     //local Settings copy for applying changes
     private Settings mSettings;
@@ -107,10 +106,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     mDie.removeDieCallbacks();
                     mDie.setLetters(getResources().getStringArray(R.array.letters_full));
                     mDie.resetCurrentLetter();
+                    mIsRolling = false;
                 } else if (!mSettings.isScatAlphabet() && settings.isScatAlphabet()) {
                     mDie.removeDieCallbacks();
                     mDie.setLetters(getResources().getStringArray(R.array.letters));
                     mDie.resetCurrentLetter();
+                    mIsRolling = false;
                 }
                 //see if we need to skip the previous letter or not
                 if (mSettings.getSkipPrevious() != settings.getSkipPrevious()) {
@@ -121,6 +122,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     mTimer.removeTimerCallbacks();
                     mTimer.setTimerDuration(settings.getTimerDuration());
                     mTimer.resetTimerProgress();
+
+
 
                     mIsTicking = false;
                 }
@@ -143,15 +146,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         if (view.getId() == R.id.btn_editable) {
             mViewPager.setCurrentItem(2);
-        }
-        if (!TextUtils.isEmpty(mTimerText)) {
-            setTimerText(mTimerText);
-        }
-        if (!TextUtils.isEmpty(mDieText)) {
-            setDieText(mDieText);
-        }
-        if (mTickingState != 0) {
-            setIsTicking(mTickingState);
         }
     }
 
@@ -214,13 +208,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void setTimerText(@NonNull String text) {
         mTimerText = text;
-        ((ScatTimer.TimerView) mPagerAdapter.getItem(mViewPager.getCurrentItem())).setTimerText(text);
+        ((ScatTimer.TimerView) mPagerAdapter.getItem(0)).setTimerText(text);
+        ((ScatTimer.TimerView) mPagerAdapter.getItem(1)).setTimerText(text);
+        ((ScatTimer.TimerView) mPagerAdapter.getItem(2)).setTimerText(text);
     }
 
     @Override
     public void setIsTicking(int ticking) {
         mTickingState = ticking;
-        ((ScatTimer.TimerView) mPagerAdapter.getItem(mViewPager.getCurrentItem())).setIsTicking(ticking);
+        ((ScatTimer.TimerView) mPagerAdapter.getItem(0)).setIsTicking(ticking);
+        ((ScatTimer.TimerView) mPagerAdapter.getItem(1)).setIsTicking(ticking);
+        //((ScatTimer.TimerView) mPagerAdapter.getItem(2)).setIsTicking(ticking);
     }
 
     @Override
@@ -232,7 +230,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void setDieText(@NonNull String text) {
         Log.d("DIETEXT", text);
         mDieText = text;
-        ((ScatDie.DieView) mPagerAdapter.getItem(mViewPager.getCurrentItem())).setDieText(text);
+        ((ScatDie.DieView) mPagerAdapter.getItem(0)).setDieText(text);
+        ((ScatDie.DieView) mPagerAdapter.getItem(1)).setDieText(text);
+        ((ScatDie.DieView) mPagerAdapter.getItem(2)).setDieText(text);
     }
 
     public static class MyPagerAdapter extends FragmentStatePagerAdapter {

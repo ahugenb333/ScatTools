@@ -57,6 +57,8 @@ public class EditableListView extends Fragment implements View.OnClickListener, 
     private static final String DIE_DEFAULT = "!";
     private static final String TIMER_DEFAULT = "2:30";
 
+    private String mTimerText = TIMER_DEFAULT;
+
     public interface EditableListViewListener {
 
         void onDieClicked();
@@ -80,6 +82,8 @@ public class EditableListView extends Fragment implements View.OnClickListener, 
         mBtnDie = (Button) v.findViewById(R.id.list_btn_die);
         mBtnReset = (Button) v.findViewById(R.id.list_btn_reset);
         mBtnTimer = (Button) v.findViewById(R.id.list_btn_timer);
+
+        mBtnTimer.setText(mTimerText);
 
         mEtListId = (EditText) v.findViewById(R.id.list_et_id);
         mBtnRandomize = (Button) v.findViewById(R.id.list_btn_randomize);
@@ -114,7 +118,6 @@ public class EditableListView extends Fragment implements View.OnClickListener, 
         super.onActivityCreated(savedInstanceState);
 
         mTvPlay.setText(PLAY);
-        mBtnTimer.setText(TIMER_DEFAULT);
         mBtnDie.setText(DIE_DEFAULT);
 
         mBtnTimer.setOnClickListener(this);
@@ -202,7 +205,10 @@ public class EditableListView extends Fragment implements View.OnClickListener, 
 
     @Override
     public void setTimerText(String text) {
-        mBtnTimer.setText(text);
+        mTimerText = text;
+        if (mBtnTimer != null) {
+            mBtnTimer.setText(mTimerText);
+        }
     }
 
     public String loadJSONFromAsset(@NonNull String assetName) {

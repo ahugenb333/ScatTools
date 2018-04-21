@@ -1,4 +1,4 @@
-package com.hugey.scattools.Settings;
+package com.hugey.scattools;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,6 +6,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+
+import com.hugey.scattools.Settings.Settings;
+import com.hugey.scattools.Settings.SettingsView;
 
 //todo parcelable extra Settings object as result
 
