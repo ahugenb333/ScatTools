@@ -13,8 +13,7 @@
         android:id="@+id/main_view_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
-    </android.support.v4.view.ViewPager>
+        android:layout_weight="1" />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/list_nav_view"
@@ -27,26 +26,41 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btn_tools"
-                android:layout_height="match_parent"
+            <TextView
+                android:id="@+id/tv_bottom_nav_tools"
                 android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@android:color/black" />
+                android:background="@android:color/black"
+                android:drawableTop="@drawable/ic_wrench_gray_24dp"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/bottom_nav_tools"
+                android:textColor="@android:color/white" />
 
-            <Button
-                android:id="@+id/btn_list"
-                android:layout_height="match_parent"
+            <TextView
+                android:id="@+id/tv_bottom_nav_list"
                 android:layout_width="0dp"
-                android:layout_weight="1"
-                android:background="@android:color/holo_blue_dark" />
-            <Button
-                android:id="@+id/btn_editable"
-                android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:background="@android:color/black" />
+                android:layout_weight="1"
+                android:background="@android:color/black"
+                android:drawableTop="@drawable/ic_list_gray_24dp"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/bottom_nav_list"
+                android:textColor="#707070" />
 
+            <TextView
+                android:id="@+id/tv_bottom_nav_editable"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/black"
+                android:drawableTop="@drawable/ic_pencil_gray_24dp"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/bottom_nav_editable_list"
+                android:textColor="#707070" />
         </LinearLayout>
     </android.support.design.widget.BottomNavigationView>
 

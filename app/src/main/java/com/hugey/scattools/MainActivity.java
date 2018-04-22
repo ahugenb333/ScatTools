@@ -2,6 +2,7 @@ package com.hugey.scattools;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -16,7 +17,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.TextView;
 
 import com.hugey.scattools.EditableList.EditableListView;
 import com.hugey.scattools.List.ListView;
@@ -28,9 +29,9 @@ import com.hugey.scattools.Settings.SettingsView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, ScatView.ScatViewListener, ListView.ListViewListener, EditableListView.EditableListViewListener, ScatTimer.TimerView, ScatDie.DieView, MenuItem.OnMenuItemClickListener {
 
-    private Button mBtnList;
-    private Button mBtnTools;
-    private Button mBtnEditable;
+    private TextView mTvList;
+    private TextView mTvTools;
+    private TextView mTvEditable;
 
     private boolean mIsTicking = false;
     private boolean mIsRolling = false;
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Settings mSettings;
 
     private static final String DIE_DEFAULT = "!";
+    private static final String COLOR_GRAY = "#707070";
 
 
     @Override
@@ -65,30 +67,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editor.remove(SettingsView.KEY_TIMER);
         editor.remove(SettingsView.KEY_TICK);
         editor.apply();
-
-
         PreferenceManager.setDefaultValues(this, R.xml.settings_preferences, true);
 
         mSettings = new Settings();
 
         mViewPager = (ViewPager) findViewById(R.id.main_view_pager);
-
         mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
-
         mViewPager.setAdapter(mPagerAdapter);
 
         mPagerAdapter.setScatListener(this);
         mPagerAdapter.setListListener(this);
         mPagerAdapter.setEditableListListener(this);
 
+        mTvList = (TextView) findViewById(R.id.tv_bottom_nav_list);
+        mTvTools = (TextView) findViewById(R.id.tv_bottom_nav_tools);
+        mTvEditable = (TextView) findViewById(R.id.tv_bottom_nav_editable);
 
-        mBtnList = (Button) findViewById(R.id.btn_list);
-        mBtnTools = (Button) findViewById(R.id.btn_tools);
-        mBtnEditable = (Button) findViewById(R.id.btn_editable);
-
-        mBtnList.setOnClickListener(this);
-        mBtnTools.setOnClickListener(this);
-        mBtnEditable.setOnClickListener(this);
+        mTvList.setOnClickListener(this);
+        mTvTools.setOnClickListener(this);
+        mTvEditable.setOnClickListener(this);
     }
 
 
@@ -137,14 +134,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.btn_tools) {
+        if (view.getId() == R.id.tv_bottom_nav_tools) {
             mViewPager.setCurrentItem(0);
+            mTvTools.setTextColor(Color.WHITE);
+            mTvList.setTextColor(Color.parseColor(COLOR_GRAY));
+            mTvEditable.setTextColor(Color.parseColor(COLOR_GRAY));
         }
-        if (view.getId() == R.id.btn_list) {
+        if (view.getId() == R.id.tv_bottom_nav_list) {
             mViewPager.setCurrentItem(1);
+            mTvTools.setTextColor(Color.parseColor(COLOR_GRAY));
+            mTvList.setTextColor(Color.WHITE);
+            mTvEditable.setTextColor(Color.parseColor(COLOR_GRAY));
         }
-        if (view.getId() == R.id.btn_editable) {
+        if (view.getId() == R.id.tv_bottom_nav_editable) {
             mViewPager.setCurrentItem(2);
+            mTvTools.setTextColor(Color.parseColor(COLOR_GRAY));
+            mTvList.setTextColor(Color.parseColor(COLOR_GRAY));
+            mTvEditable.setTextColor(Color.WHITE);
         }
     }
 

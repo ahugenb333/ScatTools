@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">ScatTools</string>
+    <string name="bottom_nav_tools">Tools</string>
+    <string name="bottom_nav_list">List</string>
+    <string name="bottom_nav_editable_list">Editable List</string>
     <string-array name="letters">
         <item>A</item>
         <item>B</item>
