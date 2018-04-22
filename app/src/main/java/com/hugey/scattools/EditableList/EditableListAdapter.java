@@ -41,7 +41,7 @@ public class EditableListAdapter extends RecyclerView.Adapter<EditableListAdapte
 
     @Override
     public void onBindViewHolder(EditableCategoryViewHolder holder, int position) {
-        holder.init("" + position + " ", categories.get(position).getCategory());
+        holder.init("" + (position + 1) + ". ", categories.get(position).getCategory());
     }
 
     @Override

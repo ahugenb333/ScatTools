@@ -3,6 +3,11 @@
     <string name="bottom_nav_tools">Tools</string>
     <string name="bottom_nav_list">List</string>
     <string name="bottom_nav_editable_list">Editable List</string>
+    <string name="btn_reset">Reset</string>
+    <string name="btn_randomize">Randomize</string>
+    <string name="lbl_tap">Tap To Roll</string>
+    <string name="lbl_play">Play</string>
+    <string name="hint_list_id">List ID</string>
     <string-array name="letters">
         <item>A</item>
         <item>B</item>

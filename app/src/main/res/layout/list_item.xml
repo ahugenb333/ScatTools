@@ -4,20 +4,17 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="8dp">
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/list_item_tv_number"
-        android:text="where dey at doe"
+        android:textColor="@android:color/black"
         tools:text="1."/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="where dey at doe"
+        android:textColor="@android:color/black"
         android:id="@+id/list_item_tv_category"
         tools:text="things you do"/>
-
-
 </LinearLayout>

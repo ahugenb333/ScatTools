@@ -40,7 +40,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.CategoryViewHo
 
     @Override
     public void onBindViewHolder(CategoryViewHolder holder, int position) {
-        holder.init("" + position + " ", categories.get(position).getCategory());
+        holder.init("" + (position + 1) + ".  ", categories.get(position).getCategory());
     }
 
     @Override
