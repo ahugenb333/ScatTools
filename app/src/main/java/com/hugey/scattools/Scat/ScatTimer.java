@@ -35,16 +35,16 @@ public class ScatTimer {
 
             int duration = mTimerProgress / 1000;
             int time = mTimerDuration - duration;
-
-            String minutes = Integer.toString(time / 60);
-            String seconds = Integer.toString(time % 60);
-            if (time % 60 < 10) {
-                seconds = "0" + seconds;
+            if (time >= 0) {
+                String minutes = Integer.toString(time / 60);
+                String seconds = Integer.toString(time % 60);
+                if (time % 60 < 10) {
+                    seconds = "0" + seconds;
+                }
+                String displayTime = minutes + ":" + seconds;
+                mTimerView.setTimerText(displayTime);
+                mTimerView.setIsTicking(TICKING_PAUSE);
             }
-            String displayTime = minutes + ":" + seconds;
-            mTimerView.setTimerText(displayTime);
-            mTimerView.setIsTicking(TICKING_PAUSE);
-
             if (time > 0) {
                 mTimerHandler.postDelayed(mTimerRunnable, mSecondInterval);
             }
@@ -91,7 +91,5 @@ public class ScatTimer {
             mTimerDuration = TIMER_DURATION_300;
             mTimerView.setTimerText(TIMER_TEXT_300);
         }
-
-
     }
 }

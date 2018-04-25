@@ -236,7 +236,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mDie.postDieDelayed();
             mIsRolling = true;
         }
-        mPlayer.start();
     }
 
     @Override
