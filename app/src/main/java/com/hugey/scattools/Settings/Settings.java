@@ -15,9 +15,18 @@ public class Settings implements Parcelable {
     public static final String TIMER_DURATION_200 = "2:00";
     public static final String TIMER_DURATION_230 = "2:30";
     public static final String TIMER_DURATION_300 = "3:00";
+    public static final String TIMER_DURATION_000 = "0:00";
+
+    public static final String EXPIRE_SOUND_RING = "Phone Ringing";
+    public static final String EXPIRE_SOUND_ROOSTER = "Rooster";
+    public static final String EXPIRE_SOUND_TRAIN = "Train Whistle";
+
+    private String mExpireSound = EXPIRE_SOUND_RING;
+    private boolean mIsTickSounds = false;
 
     private boolean mIsScatAlphabet = true;
     private boolean mSkipPrevious = false;
+
     private String mTimerDuration = TIMER_DURATION_230;
 
     public boolean isScatAlphabet() {
@@ -32,6 +41,10 @@ public class Settings implements Parcelable {
         return mTimerDuration;
     }
 
+    public String getExpireSound() {
+        return mExpireSound;
+    }
+
     public boolean isTimerDuration200() {
         return TextUtils.equals(mTimerDuration, TIMER_DURATION_200);
     }
@@ -44,6 +57,10 @@ public class Settings implements Parcelable {
         return TextUtils.equals(mTimerDuration, TIMER_DURATION_300);
     }
 
+    public boolean shouldPlaySound(String text) {
+        return (TextUtils.equals(text, TIMER_DURATION_000));
+    }
+
     public void setAlphabetDefault(boolean isDefault) {
         mIsScatAlphabet = isDefault;
     }
@@ -54,6 +71,14 @@ public class Settings implements Parcelable {
 
     public void setTimerDuration(String duration) {
         mTimerDuration = duration;
+    }
+
+    public void setExpireSound(String expireSound) {
+        mExpireSound = expireSound;
+    }
+
+    public void setTickSounds(boolean tickSounds) {
+        mIsTickSounds = tickSounds;
     }
 
     public Settings(Parcel in) {

@@ -81,7 +81,6 @@ public class SettingsView extends PreferenceFragment implements Preference.OnPre
             pSkip.setChecked(false);
         }
 
-
         if (mSettings.isTimerDuration200()) {
             pTimer.setValueIndex(0);
         } else if (mSettings.isTimerDuration230()) {
@@ -89,7 +88,6 @@ public class SettingsView extends PreferenceFragment implements Preference.OnPre
         } else if (mSettings.isTimerDuration300()) {
             pTimer.setValueIndex(2);
         }
-
     }
 
     @Override
@@ -110,6 +108,10 @@ public class SettingsView extends PreferenceFragment implements Preference.OnPre
             }
         } else if (TextUtils.equals(key, KEY_TIMER)) {
             mSettings.setTimerDuration(o.toString());
+        } else if (TextUtils.equals(key, KEY_EXPIRE)) {
+            mSettings.setExpireSound(o.toString());
+        } else if (TextUtils.equals(key, KEY_TIMER)) {
+            mSettings.setTickSounds((boolean) o);
         }
         return true;
     }

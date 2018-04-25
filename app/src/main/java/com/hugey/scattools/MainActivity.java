@@ -3,6 +3,7 @@ package com.hugey.scattools;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -18,6 +19,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import com.squareup.leakcanary.LeakCanary;
 
 import com.hugey.scattools.EditableList.EditableListView;
 import com.hugey.scattools.List.ListView;
@@ -48,11 +50,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String DIE_DEFAULT = "!";
     private static final String COLOR_GRAY = "#707070";
 
+    MediaPlayer mPlayer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(getApplication());
+
+        mPlayer = MediaPlayer.create(this,  R.raw.phone);
 
         mTimer = new ScatTimer(this);
         mTimer.setTimerView(this);
@@ -124,11 +137,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     mIsTicking = false;
                 }
-
-                //update our new settings value
-                mSettings = settings;
+                //see if expire sound changed
+                if (!TextUtils.equals(mSettings.getExpireSound(), settings.getExpireSound())) {
+                    if (TextUtils.equals(settings.getExpireSound(), Settings.EXPIRE_SOUND_RING)) {
+                        mPlayer = MediaPlayer.create(this, R.raw.phone);
+                    } else if (TextUtils.equals(settings.getExpireSound(), Settings.EXPIRE_SOUND_ROOSTER)) {
+                        mPlayer = MediaPlayer.create(this, R.raw.rooster);
+                    } else if (TextUtils.equals(settings.getExpireSound(), Settings.EXPIRE_SOUND_TRAIN)) {
+                        mPlayer = MediaPlayer.create(this, R.raw.train);
+                    }
+                    //update our new settings value
+                    mSettings = settings;
+                }
             }
-
         }
     }
 
@@ -176,7 +197,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onMenuItemClick(MenuItem menuItem) {
         Intent settingsIntent = SettingsActivity.getLaunchIntent(this, mSettings);
 
-
         startActivityForResult(settingsIntent, SettingsActivity.REQUEST_CODE);
         return false;
     }
@@ -216,10 +236,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mDie.postDieDelayed();
             mIsRolling = true;
         }
+        mPlayer.start();
     }
 
     @Override
     public void setTimerText(@NonNull String text) {
+        if (mSettings.shouldPlaySound(text)) {
+            mPlayer.start();
+        }
         ((ScatTimer.TimerView) mPagerAdapter.getItem(0)).setTimerText(text);
         ((ScatTimer.TimerView) mPagerAdapter.getItem(1)).setTimerText(text);
         ((ScatTimer.TimerView) mPagerAdapter.getItem(2)).setTimerText(text);
@@ -239,7 +263,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void setDieText(@NonNull String text) {
-        Log.d("DIETEXT", text);
         ((ScatDie.DieView) mPagerAdapter.getItem(0)).setDieText(text);
         ((ScatDie.DieView) mPagerAdapter.getItem(1)).setDieText(text);
         ((ScatDie.DieView) mPagerAdapter.getItem(2)).setDieText(text);

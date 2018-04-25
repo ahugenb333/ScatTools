@@ -84,8 +84,9 @@
     </string-array>
 
     <string-array name="settings_expire_sounds">
-        <item>Beep</item>
-        <item>Boop</item>
+        <item>Phone Ringing</item>
+        <item>Rooster</item>
+        <item>Train Whistle</item>
     </string-array>
 
     <!-- Example General settings -->
