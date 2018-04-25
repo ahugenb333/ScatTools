@@ -99,13 +99,16 @@ public class Settings implements Parcelable {
         setTimerDuration(set.getTimerDuration());
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Settings settings = (Settings) o;
-        return mIsScatAlphabet == settings.mIsScatAlphabet &&
+        return mIsTickSounds == settings.mIsTickSounds &&
+                mIsScatAlphabet == settings.mIsScatAlphabet &&
                 mSkipPrevious == settings.mSkipPrevious &&
+                TextUtils.equals(mExpireSound, settings.mExpireSound) &&
                 TextUtils.equals(mTimerDuration, settings.mTimerDuration);
     }
 
