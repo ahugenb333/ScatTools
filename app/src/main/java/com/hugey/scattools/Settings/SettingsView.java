@@ -88,6 +88,20 @@ public class SettingsView extends PreferenceFragment implements Preference.OnPre
         } else if (mSettings.isTimerDuration300()) {
             pTimer.setValueIndex(2);
         }
+
+        if (TextUtils.equals(mSettings.getExpireSound(), Settings.EXPIRE_SOUND_RING)) {
+            pExpire.setValueIndex(0);
+        } else if (TextUtils.equals(mSettings.getExpireSound(),Settings.EXPIRE_SOUND_ROOSTER)) {
+            pExpire.setValueIndex(1);
+        } else if (TextUtils.equals(mSettings.getExpireSound(),Settings.EXPIRE_SOUND_TRAIN)) {
+            pExpire.setValueIndex(2);
+        }
+
+        if (mSettings.isTickSounds()) {
+            pTick.setChecked(true);
+        } else {
+            pTick.setChecked(false);
+        }
     }
 
     @Override
@@ -110,7 +124,7 @@ public class SettingsView extends PreferenceFragment implements Preference.OnPre
             mSettings.setTimerDuration(o.toString());
         } else if (TextUtils.equals(key, KEY_EXPIRE)) {
             mSettings.setExpireSound(o.toString());
-        } else if (TextUtils.equals(key, KEY_TIMER)) {
+        } else if (TextUtils.equals(key, KEY_TICK)) {
             mSettings.setTickSounds((boolean) o);
         }
         return true;

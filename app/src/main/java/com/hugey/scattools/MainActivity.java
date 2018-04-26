@@ -50,7 +50,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String DIE_DEFAULT = "!";
     private static final String COLOR_GRAY = "#707070";
 
-    MediaPlayer mPlayer;
+    MediaPlayer mExpirePlayer;
+    MediaPlayer mTickPlayer;
 
 
     @Override
@@ -65,7 +66,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         LeakCanary.install(getApplication());
 
-        mPlayer = MediaPlayer.create(this,  R.raw.phone);
+        mExpirePlayer = MediaPlayer.create(this,  R.raw.phone);
+        mTickPlayer = MediaPlayer.create(this, R.raw.click);
 
         mTimer = new ScatTimer(this);
         mTimer.setTimerView(this);
@@ -140,15 +142,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //see if expire sound changed
                 if (!TextUtils.equals(mSettings.getExpireSound(), settings.getExpireSound())) {
                     if (TextUtils.equals(settings.getExpireSound(), Settings.EXPIRE_SOUND_RING)) {
-                        mPlayer = MediaPlayer.create(this, R.raw.phone);
+                        mExpirePlayer = MediaPlayer.create(this, R.raw.phone);
                     } else if (TextUtils.equals(settings.getExpireSound(), Settings.EXPIRE_SOUND_ROOSTER)) {
-                        mPlayer = MediaPlayer.create(this, R.raw.rooster);
+                        mExpirePlayer = MediaPlayer.create(this, R.raw.rooster);
                     } else if (TextUtils.equals(settings.getExpireSound(), Settings.EXPIRE_SOUND_TRAIN)) {
-                        mPlayer = MediaPlayer.create(this, R.raw.train);
+                        mExpirePlayer = MediaPlayer.create(this, R.raw.train);
                     }
-                    //update our new settings value
-                    mSettings = settings;
                 }
+                //update our new settings value
+                if (settings.isTickSounds()) {
+                    mTickPlayer = MediaPlayer.create(this, R.raw.click);
+                }
+                mSettings = settings;
             }
         }
     }
@@ -240,8 +245,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void setTimerText(@NonNull String text) {
-        if (mSettings.shouldPlaySound(text)) {
-            mPlayer.start();
+        if (mSettings.shouldPlayExpireSound(text)) {
+            mExpirePlayer.start();
+        } else if (mSettings.shouldPlayTickSound(text)) {
+            mTickPlayer.start();
         }
         ((ScatTimer.TimerView) mPagerAdapter.getItem(0)).setTimerText(text);
         ((ScatTimer.TimerView) mPagerAdapter.getItem(1)).setTimerText(text);

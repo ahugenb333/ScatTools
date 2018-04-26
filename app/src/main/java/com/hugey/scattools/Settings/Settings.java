@@ -45,6 +45,10 @@ public class Settings implements Parcelable {
         return mExpireSound;
     }
 
+    public boolean isTickSounds() {
+        return mIsTickSounds;
+    }
+
     public boolean isTimerDuration200() {
         return TextUtils.equals(mTimerDuration, TIMER_DURATION_200);
     }
@@ -57,8 +61,12 @@ public class Settings implements Parcelable {
         return TextUtils.equals(mTimerDuration, TIMER_DURATION_300);
     }
 
-    public boolean shouldPlaySound(String text) {
+    public boolean shouldPlayExpireSound(String text) {
         return (TextUtils.equals(text, TIMER_DURATION_000));
+    }
+
+    public boolean shouldPlayTickSound(String text) {
+        return (mIsTickSounds && !TextUtils.equals(text, mTimerDuration));
     }
 
     public void setAlphabetDefault(boolean isDefault) {
@@ -82,21 +90,16 @@ public class Settings implements Parcelable {
     }
 
     public Settings(Parcel in) {
+        mIsTickSounds = in.readByte() != 0;
         mIsScatAlphabet = in.readByte() != 0;
         mSkipPrevious = in.readByte() != 0;
         mTimerDuration = in.readString();
+        mExpireSound = in.readString();
     }
 
     //default settings constructor
     public Settings() {
 
-    }
-
-    //copy constructor
-    public Settings(Settings set) {
-        setAlphabetDefault(set.isScatAlphabet());
-        setSkipPrevious(set.getSkipPrevious());
-        setTimerDuration(set.getTimerDuration());
     }
 
 
@@ -119,9 +122,11 @@ public class Settings implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeByte((byte) (mIsTickSounds ? 1 : 0));
         parcel.writeByte((byte) (mIsScatAlphabet ? 1 : 0));
         parcel.writeByte((byte) (mSkipPrevious ? 1 : 0));
         parcel.writeString(mTimerDuration);
+        parcel.writeString(mExpireSound);
     }
 
     public static final Creator<Settings> CREATOR = new Creator<Settings>() {
