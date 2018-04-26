@@ -244,6 +244,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        mTickPlayer.release();
+        mExpirePlayer.release();
+    }
+
+    @Override
     public void setTimerText(@NonNull String text) {
         if (mSettings.shouldPlayExpireSound(text)) {
             mExpirePlayer.start();
