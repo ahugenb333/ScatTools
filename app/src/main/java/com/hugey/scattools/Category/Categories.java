@@ -49,8 +49,6 @@ public class Categories {
 
         public ArrayList<Category> getRandomizedCategories() {
             int d = (int)Math.floor(Math.random() * categories.size());
-            Log.d("Random number: " + d, "asdf");
-
 
             return getListByID(d);
         }

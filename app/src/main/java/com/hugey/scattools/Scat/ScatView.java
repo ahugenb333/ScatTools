@@ -110,13 +110,10 @@ public class ScatView extends Fragment implements ScatTimer.TimerView, ScatDie.D
         if (v.getId() == R.id.btn_play) {
             if (mPlayText.equals(PLAY)) {
                 mBtnPlay.setText(PAUSE);
-                Log.d("Pressed play: ", mPlayText);
             } else if (mPlayText.equals(PAUSE)) {
                 mBtnPlay.setText(RESUME);
-                Log.d("Pressed pause: ", mPlayText);
             } else if (mPlayText.equals(RESUME)) {
                 mBtnPlay.setText(PAUSE);
-                Log.d("Pressed resume: ", mPlayText);
             }
             mPlayText = mBtnPlay.getText().toString();
             listener.onPlayClicked();

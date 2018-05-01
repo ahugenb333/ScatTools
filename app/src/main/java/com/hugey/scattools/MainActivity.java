@@ -13,13 +13,11 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import com.squareup.leakcanary.LeakCanary;
 
 import com.hugey.scattools.EditableList.EditableListView;
 import com.hugey.scattools.List.ListView;
@@ -59,13 +57,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
-            return;
-        }
-        LeakCanary.install(getApplication());
-
         mExpirePlayer = MediaPlayer.create(this,  R.raw.phone);
         mTickPlayer = MediaPlayer.create(this, R.raw.click);
 
@@ -101,6 +92,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mTvList.setOnClickListener(this);
         mTvTools.setOnClickListener(this);
         mTvEditable.setOnClickListener(this);
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 0) {
+                    mViewPager.setCurrentItem(0);
+                    mTvTools.setTextColor(Color.WHITE);
+                    mTvList.setTextColor(Color.parseColor(COLOR_GRAY));
+                    mTvEditable.setTextColor(Color.parseColor(COLOR_GRAY));
+                } else if (position == 1) {
+                    mViewPager.setCurrentItem(1);
+                    mTvTools.setTextColor(Color.parseColor(COLOR_GRAY));
+                    mTvList.setTextColor(Color.WHITE);
+                    mTvEditable.setTextColor(Color.parseColor(COLOR_GRAY));
+                } else if (position == 2) {
+                    mViewPager.setCurrentItem(2);
+                    mTvTools.setTextColor(Color.parseColor(COLOR_GRAY));
+                    mTvList.setTextColor(Color.parseColor(COLOR_GRAY));
+                    mTvEditable.setTextColor(Color.WHITE);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
 
@@ -162,28 +185,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         if (view.getId() == R.id.tv_bottom_nav_tools) {
             mViewPager.setCurrentItem(0);
-            mTvTools.setTextColor(Color.WHITE);
-            mTvList.setTextColor(Color.parseColor(COLOR_GRAY));
-            mTvEditable.setTextColor(Color.parseColor(COLOR_GRAY));
         }
         if (view.getId() == R.id.tv_bottom_nav_list) {
             mViewPager.setCurrentItem(1);
-            mTvTools.setTextColor(Color.parseColor(COLOR_GRAY));
-            mTvList.setTextColor(Color.WHITE);
-            mTvEditable.setTextColor(Color.parseColor(COLOR_GRAY));
         }
         if (view.getId() == R.id.tv_bottom_nav_editable) {
             mViewPager.setCurrentItem(2);
-            mTvTools.setTextColor(Color.parseColor(COLOR_GRAY));
-            mTvList.setTextColor(Color.parseColor(COLOR_GRAY));
-            mTvEditable.setTextColor(Color.WHITE);
         }
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem menuItem = menu.findItem(R.id.mn_options);
-        menuItem.setIcon(android.R.drawable.ic_dialog_info);
         menuItem.setVisible(true);
         menuItem.setOnMenuItemClickListener(this);
         return true;

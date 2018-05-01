@@ -124,13 +124,10 @@ public class ListView extends Fragment implements View.OnClickListener, ScatDie.
 
             if (mPlayText.equals(PLAY)) {
                 mTvPlay.setText(PAUSE);
-                Log.d("Pressed play: ", mPlayText);
             } else if (mPlayText.equals(PAUSE)) {
                 mTvPlay.setText(RESUME);
-                Log.d("Pressed pause: ", mPlayText);
             } else if (mPlayText.equals(RESUME)) {
                 mTvPlay.setText(PAUSE);
-                Log.d("Pressed resume: ", mPlayText);
             }
 
             mPlayText = mTvPlay.getText().toString();
@@ -167,14 +164,10 @@ public class ListView extends Fragment implements View.OnClickListener, ScatDie.
 
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        if (!TextUtils.isEmpty(charSequence)){
-            Log.d("editText ID: " + charSequence, "asdf");
+        if (!TextUtils.isEmpty(charSequence)) {
             int id = Integer.parseInt(charSequence.toString());
             if (id < mCategories.getCategories().size()) {
                 List<Category> cat = mCategories.getCategories();
-                for (int z = 0; z < cat.size(); z++) {
-                    Log.d("category id:" + cat.get(z).getId() + " category: " + cat.get(z).getCategory(), "asdf");
-                }
                 mAdapter.setCategories(mCategories.getListByID(id));
                 mAdapter.notifyDataSetChanged();
             }
