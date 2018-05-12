@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.hugey.scattools.R;
+import com.hugey.scattools.SettingsSingleton;
 
 /**
  * Created by user on 12/29/17.
@@ -46,6 +47,8 @@ public class SettingsView extends PreferenceFragment implements Preference.OnPre
         pTimer = (ListPreference) getPreferenceManager().findPreference(KEY_TIMER);
         pExpire = (ListPreference) getPreferenceManager().findPreference(KEY_EXPIRE);
         pTick = (SwitchPreference) getPreferenceManager().findPreference(KEY_TICK);
+
+        mSettings = SettingsSingleton.getInstance().getSettings();
 
         if (mSettings != null) {
             initSettings();
@@ -127,6 +130,7 @@ public class SettingsView extends PreferenceFragment implements Preference.OnPre
         } else if (TextUtils.equals(key, KEY_TICK)) {
             mSettings.setTickSounds((boolean) o);
         }
+        SettingsSingleton.getInstance().setSettings(mSettings);
         return true;
     }
 

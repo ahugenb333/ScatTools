@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == SettingsActivity.REQUEST_CODE) {
-            Settings settings = data.getParcelableExtra(SettingsActivity.EXTRA_SETTINGS_OUT);
+            Settings settings = SettingsSingleton.getInstance().getSettings();
 
             //settings have changed, need to apply changes
             if (!mSettings.equals(settings)) {

@@ -21,7 +21,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     public static Intent getLaunchIntent(Context context, Settings settings) {
         Intent intent = new Intent(context, SettingsActivity.class);
-        intent.putExtra(EXTRA_SETTINGS_IN, settings);
+        //intent.putExtra(EXTRA_SETTINGS_IN, settings);
         return intent;
     }
 
@@ -33,11 +33,12 @@ public class SettingsActivity extends AppCompatActivity {
 
         mSettingsView = new SettingsView();
 
-        Settings settings = getIntent().getParcelableExtra(EXTRA_SETTINGS_IN);
-
-        if (settings != null) {
-            mSettingsView.setSettings(settings);
-        }
+//        SettingsSingleton settingsSingleton = SettingsSingleton.getInstance();
+//        Settings settings = settingsSingleton.getSettings();
+//
+//        if (settings != null) {
+//            mSettingsView.setSettings(settings);
+//        }
 
         getFragmentManager().beginTransaction().replace(android.R.id.content, mSettingsView).commit();
         setupActionBar();
@@ -47,9 +48,9 @@ public class SettingsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent intent = new Intent();
-                intent.putExtra(EXTRA_SETTINGS_OUT, mSettingsView.getSettings());
-                setResult(RESULT_OK, intent);
+                //Intent intent = new Intent();
+                //intent.putExtra(EXTRA_SETTINGS_OUT, mSettingsView.getSettings());
+                //setResult(RESULT_OK, intent);
                 onBackPressed();
                 return true;
             default:
