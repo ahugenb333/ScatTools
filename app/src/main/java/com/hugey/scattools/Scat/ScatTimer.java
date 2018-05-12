@@ -28,7 +28,7 @@ public class ScatTimer {
     public static final int TICKING_PAUSE = 2;
     public static final int TICKING_RESUME = 3;
 
-    Runnable mTimerRunnable = new Runnable() {
+    private Runnable mTimerRunnable = new Runnable() {
         @Override
         public void run() {
             mTimerProgress += mSecondInterval;
