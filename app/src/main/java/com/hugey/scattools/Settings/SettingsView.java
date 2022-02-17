@@ -7,14 +7,13 @@ import android.preference.PreferenceFragment;
 import android.preference.SwitchPreference;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.hugey.scattools.R;
+import com.hugey.scattools.SettingsSingleton;
 
 /**
  * Created by user on 12/29/17.
  * <p>
- * //TODO maintain a Settings object when this page goes up/down
  **/
 
 public class SettingsView extends PreferenceFragment implements Preference.OnPreferenceChangeListener {
@@ -46,6 +45,8 @@ public class SettingsView extends PreferenceFragment implements Preference.OnPre
         pTimer = (ListPreference) getPreferenceManager().findPreference(KEY_TIMER);
         pExpire = (ListPreference) getPreferenceManager().findPreference(KEY_EXPIRE);
         pTick = (SwitchPreference) getPreferenceManager().findPreference(KEY_TICK);
+
+        mSettings = SettingsSingleton.getInstance().getSettings();
 
         if (mSettings != null) {
             initSettings();
@@ -127,16 +128,7 @@ public class SettingsView extends PreferenceFragment implements Preference.OnPre
         } else if (TextUtils.equals(key, KEY_TICK)) {
             mSettings.setTickSounds((boolean) o);
         }
+        SettingsSingleton.getInstance().setSettings(mSettings);
         return true;
-    }
-
-    public Settings getSettings() {
-        return mSettings;
-    }
-
-    public void setSettings(Settings settings) {
-        if (mSettings == null || !mSettings.equals(settings)) {
-            mSettings = settings;
-        }
     }
 }

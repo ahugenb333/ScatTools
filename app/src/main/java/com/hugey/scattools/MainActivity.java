@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editor.apply();
         PreferenceManager.setDefaultValues(this, R.xml.settings_preferences, true);
 
-        mSettings = new Settings();
+        mSettings = new Settings(SettingsSingleton.getInstance().getSettings());
 
         mViewPager = (ViewPager) findViewById(R.id.main_view_pager);
         mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
@@ -131,8 +131,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == SettingsActivity.REQUEST_CODE) {
-            Settings settings = data.getParcelableExtra(SettingsActivity.EXTRA_SETTINGS_OUT);
+        Settings settings = SettingsSingleton.getInstance().getSettings();
+        if (requestCode == SettingsActivity.REQUEST_CODE && settings != null) {
 
             //settings have changed, need to apply changes
             if (!mSettings.equals(settings)) {
@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (settings.isTickSounds()) {
                     mTickPlayer = MediaPlayer.create(this, R.raw.click);
                 }
-                mSettings = settings;
+                mSettings = new Settings(settings);
             }
         }
     }
@@ -213,8 +213,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onMenuItemClick(MenuItem menuItem) {
-        Intent settingsIntent = SettingsActivity.getLaunchIntent(this, mSettings);
-
+        Intent settingsIntent = SettingsActivity.getLaunchIntent(this);
         startActivityForResult(settingsIntent, SettingsActivity.REQUEST_CODE);
         return false;
     }
@@ -304,7 +303,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         public MyPagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
-
             mScatView = new ScatView();
             mListView = new ListView();
             mEditableListView = new EditableListView();

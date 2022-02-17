@@ -30,7 +30,7 @@ public class ScatDie {
     private String mPrevious = "";
 
 
-    Runnable mDieRunnable = new Runnable() {
+    private Runnable mDieRunnable = new Runnable() {
         @Override
         public void run() {
             mDieProgress += mDieInterval;
@@ -85,7 +85,7 @@ public class ScatDie {
         mDieView.setIsRolling(false);
     }
 
-    public String getRandomLetter() {
+    private String getRandomLetter() {
         if (mSkipPrevious) {
             return getRandom(mLetters);
         }

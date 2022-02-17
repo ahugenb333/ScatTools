@@ -1,21 +1,17 @@
 package com.hugey.scattools.Settings;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.text.TextUtils;
 
-import java.util.Objects;
-
 /**
- * Created by user on 1/3/18.
+ * Created by austin on 1/3/18.
  */
 
-public class Settings implements Parcelable {
+public class Settings {
 
-    public static final String TIMER_DURATION_200 = "2:00";
-    public static final String TIMER_DURATION_230 = "2:30";
-    public static final String TIMER_DURATION_300 = "3:00";
-    public static final String TIMER_DURATION_000 = "0:00";
+    private static final String TIMER_DURATION_200 = "2:00";
+    private static final String TIMER_DURATION_230 = "2:30";
+    private static final String TIMER_DURATION_300 = "3:00";
+    private static final String TIMER_DURATION_000 = "0:00";
 
     public static final String EXPIRE_SOUND_RING = "Phone Ringing";
     public static final String EXPIRE_SOUND_ROOSTER = "Rooster";
@@ -89,19 +85,18 @@ public class Settings implements Parcelable {
         mIsTickSounds = tickSounds;
     }
 
-    public Settings(Parcel in) {
-        mIsTickSounds = in.readByte() != 0;
-        mIsScatAlphabet = in.readByte() != 0;
-        mSkipPrevious = in.readByte() != 0;
-        mTimerDuration = in.readString();
-        mExpireSound = in.readString();
+    public Settings(Settings c) {
+        mIsTickSounds = c.mIsTickSounds;
+        mExpireSound = c.mExpireSound;
+        mSkipPrevious = c.mSkipPrevious;
+        mTimerDuration = c.mTimerDuration;
+        mIsScatAlphabet = c.mIsScatAlphabet;
     }
 
     //default settings constructor
     public Settings() {
 
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -114,30 +109,4 @@ public class Settings implements Parcelable {
                 TextUtils.equals(mExpireSound, settings.mExpireSound) &&
                 TextUtils.equals(mTimerDuration, settings.mTimerDuration);
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeByte((byte) (mIsTickSounds ? 1 : 0));
-        parcel.writeByte((byte) (mIsScatAlphabet ? 1 : 0));
-        parcel.writeByte((byte) (mSkipPrevious ? 1 : 0));
-        parcel.writeString(mTimerDuration);
-        parcel.writeString(mExpireSound);
-    }
-
-    public static final Creator<Settings> CREATOR = new Creator<Settings>() {
-        @Override
-        public Settings createFromParcel(Parcel in) {
-            return new Settings(in);
-        }
-
-        @Override
-        public Settings[] newArray(int size) {
-            return new Settings[size];
-        }
-    };
 }
